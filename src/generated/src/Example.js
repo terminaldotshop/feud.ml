@@ -37,7 +37,7 @@ function Example$App(Props) {
                             q: "How many times a day do you sleep?",
                             id: "sleep"
                           }),
-                      className: "question"
+                      className: "text-white"
                     }),
                 JsxRuntime.jsx("button", {
                       children: "Submit",

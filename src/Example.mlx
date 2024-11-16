@@ -3,8 +3,8 @@ open React
 module Question = struct
   let[@react.component] make ~q ~id =
     <div className="">
-        <span className="">(string q)</span>
-        <input name=id placeholder="your answer..."></input>
+      <span className="">(string q)</span>
+      <input name=id placeholder="your answer..." />
     </div>
   ;;
 
@@ -14,10 +14,10 @@ end
 module App = struct
   let[@react.component] make () =
     <form formMethod="POST" action="/submit_questions">
-        <div className="question">
-            <Question q="How many times a day do you sleep?" id="sleep"/>
-        </div>
-        <button type_="submit">(string "Submit")</button>
+      <div className="text-white">
+        <Question q="How many times a day do you sleep?" id="sleep" />
+      </div>
+      <button type_="submit">(string "Submit")</button>
     </form>
   ;;
 
