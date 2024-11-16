@@ -1,8 +1,16 @@
 let ( let* ) = Result.bind
 
-type state = { users : (string, string array) Hashtbl.t }
+type state = {
+    running: bool;
+    questions: string array;
+    users : (string, string array) Hashtbl.t
+}
 
-let empty () = { users = Hashtbl.create 1 }
+let empty () = {
+    running = false;
+    questions = Array.make 10 "";
+    users = Hashtbl.create 1
+}
 
 let valid_chars s =
   let invalid = [ '<'; '>' ] in

@@ -12,8 +12,9 @@ module Question = struct
 end
 
 module App = struct
-  let[@react.component] make () =
+  let[@react.component] make ~state =
     <form formMethod="POST" action="/submit_questions">
+      <span>(string state##count)</span>
       <div className="text-white">
         <Question q="How many times a day do you sleep?" id="sleep" />
       </div>

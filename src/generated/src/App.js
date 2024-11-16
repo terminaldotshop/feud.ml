@@ -30,14 +30,18 @@ const Question = {
 };
 
 function App$App(Props) {
+  let state = Props.state;
   return JsxRuntime.jsxs("form", {
               children: [
+                JsxRuntime.jsx("span", {
+                      children: state.count
+                    }),
                 JsxRuntime.jsx("div", {
                       children: JsxRuntime.jsx(App$Question, {
                             q: "How many times a day do you sleep?",
                             id: "sleep"
                           }),
-                      className: "question"
+                      className: "text-white"
                     }),
                 JsxRuntime.jsx("button", {
                       children: "Submit",
