@@ -5,9 +5,9 @@ type state = { users : (string, string array) Hashtbl.t }
 let empty () = { users = Hashtbl.create 1 }
 
 let valid_chars s =
-    let invalid = ['<' ; '>'] in
-    List.find_opt (String.contains s) invalid
-    |> Option.is_none
+  let invalid = [ '<'; '>' ] in
+  List.find_opt (String.contains s) invalid |> Option.is_none
+;;
 
 let msg_of_string s =
   let splits = String.split_on_char '.' s in
