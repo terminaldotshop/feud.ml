@@ -16,7 +16,7 @@ module App = struct
     <form onSubmit=(fun form ->
                      Event.Form.preventDefault form;
                      Event.Form.stopPropagation form;
-                     Js.Console.log "foo")>
+                     Js.Console.log "prime")>
       <span>(string state##count)</span>
       <div className="text-white">
         <Question q="How many times a day do you sleep?" id="sleep" />

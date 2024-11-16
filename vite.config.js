@@ -14,8 +14,8 @@ export default defineConfig({
         melangePlugin({
             emitDir: "src",
             buildTarget: "generated",
-            buildCommand: "dune build",
-            watchCommand: "dune build @melange -w",
+            buildCommand: "exit 0",
+            watchCommand: "sleep 10000000",
         }),
     ],
 });

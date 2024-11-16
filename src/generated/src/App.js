@@ -51,7 +51,7 @@ function App$App(Props) {
               onSubmit: (function (form) {
                   form.preventDefault();
                   form.stopPropagation();
-                  console.log("foo");
+                  console.log("prime");
                 })
             });
 }
