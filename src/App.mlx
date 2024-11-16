@@ -28,34 +28,55 @@ module Questionaire = struct
     <div className="">
       <div className="question">
         <span className="text-white">(string "Question: ")</span>
-        <span className="text-white">
-          (string question)
-        </span>
+        <span className="text-white">(string question)</span>
       </div>
       <div className="answer">
-        <input type_="text" name="answer" placeholder="rizz me daddy"/>
+        <input type_="text" name="answer" placeholder="rizz me daddy" />
       </div>
-        <button className="text-white" onClick=(fun evt ->
-            setIdx (fun v ->
-                Js.Console.log("v", v);
-                v + 1
-            )
-        )>(string "Next")</button>
+      <button className="text-white"
+              onClick=(fun evt ->
+                        setIdx (fun v ->
+                          Js.Console.log ("v", v);
+                          v + 1))>
+        (string "Next")
+      </button>
     </div>
   ;;
 end
 
+let listenWebSocket: string -> (Agg.state -> unit) -> unit =
+    [%mel.raw {|
+    function(url, callback) {
+        console.log("listening to websocket", url)
+        const ws = new WebSocket(url)
+        ws.onmessage = function(evt) {
+            console.log("got message", evt.data)
+            try {
+                const data = JSON.parse(evt.data)
+                callback(data)
+            } catch (e) {
+            }
+            }
+
+        setTimeout(function() {
+            console.log("sending")
+            ws.send("hello, tj")
+        }, 1000);
+    }
+    |}]
+
 module App = struct
   let[@react.component] make ~(state : Agg.state) =
-    let (idx, setIdx) = useState (fun () -> state.currentIdx) in
-
-    if not state.running then
-        <NotRunning />
-    else if idx < Array.length state.questions then
-        <Questionaire question=state.questions.(idx) setIdx />
-    else (
-        <Done />
-    )
+    let idx, setIdx = useState (fun () -> state.currentIdx) in
+    useEffect (fun () ->
+      listenWebSocket "ws://localhost:3000/ws" (fun (state : Agg.state) ->
+        Js.Console.log state);
+      None);
+    if not state.running
+    then <NotRunning />
+    else if idx < Array.length state.questions
+    then <Questionaire question=state.questions.(idx) setIdx />
+    else <Done />
   ;;
 
   let default = make

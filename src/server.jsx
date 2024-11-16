@@ -43,12 +43,25 @@ Bus.listen("round.start", (state, questions) => {
 
 // Import the Bun server module
 const server = Bun.serve({
+    websocket: {
+        message(ws, message) {
+            ws.send(JSON.stringify(Bus.getState()))
+        },
+        open(ws) {
+            ws.send(JSON.stringify(Bus.getState()))
+        },
+    },
     port: process.env.PORT,
     fetch(req) {
         const url = new URL(req.url);
 
         // Simple routing logic
-        if (url.pathname === "/") {
+        if (url.pathname === "/ws") {
+            if (server.upgrade(req)) {
+              return; // do not return a Response
+            }
+            return new Response("Upgrade failed", { status: 500 });
+        } else if (url.pathname === "/") {
             const app = ReactDOMServer.renderToString(<App state={Bus.getState()} />)
             const index = fs.readFileSync("./dist/index.html").toString()
             const html = index.
