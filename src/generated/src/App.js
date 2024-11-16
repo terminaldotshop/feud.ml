@@ -29,10 +29,6 @@ const Question = {
   $$default: App$Question
 };
 
-function onSubmit(evt) {
-  console.log(evt);
-}
-
 function App$App(Props) {
   let state = Props.state;
   return JsxRuntime.jsxs("form", {
@@ -52,8 +48,11 @@ function App$App(Props) {
                       type: "submit"
                     })
               ],
-              formMethod: "POST",
-              onSubmit: onSubmit
+              onSubmit: (function (form) {
+                  form.preventDefault();
+                  form.stopPropagation();
+                  console.log("foo");
+                })
             });
 }
 
@@ -66,7 +65,6 @@ const $$default = App$App;
 
 export {
   Question ,
-  onSubmit ,
   App ,
   $$default as default,
 }

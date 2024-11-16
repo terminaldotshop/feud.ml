@@ -13,7 +13,10 @@ end
 
 module App = struct
   let[@react.component] make ~state =
-    <form formMethod="POST" action="/submit_questions">
+    <form onSubmit=(fun form ->
+                     Event.Form.preventDefault form;
+                     Event.Form.stopPropagation form;
+                     Js.Console.log "foo")>
       <span>(string state##count)</span>
       <div className="text-white">
         <Question q="How many times a day do you sleep?" id="sleep" />
