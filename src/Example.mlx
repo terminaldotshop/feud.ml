@@ -1,8 +1,27 @@
 open React
 
-module Greeting = struct
-  let[@react.component] make () = <div onClick=(fun _ -> Js.Console.log "hi")>(string "Hello")</div>
+module Question = struct
+  let[@react.component] make ~q ~id =
+    <div className="">
+        <span className="">(string q)</span>
+        <input name=id placeholder="your answer..."></input>
+    </div>
+  ;;
+
   let default = make
 end
 
-let default = Greeting.make
+module App = struct
+  let[@react.component] make () =
+    <form formMethod="POST" action="/submit_questions">
+        <div className="question">
+            <Question q="How many times a day do you sleep?" id="sleep"/>
+        </div>
+        <button type_="submit">(string "Submit")</button>
+    </form>
+  ;;
+
+  let default = make
+end
+
+let default = App.make

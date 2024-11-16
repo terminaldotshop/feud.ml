@@ -2,24 +2,63 @@
 
 import * as JsxRuntime from "react/jsx-runtime";
 
-function Example$Greeting(Props) {
-  return JsxRuntime.jsx("div", {
-              children: "Hello",
-              onClick: (function (param) {
-                  console.log("hi");
-                })
+function make(q) {
+  return function (id) {
+    return JsxRuntime.jsxs("div", {
+                children: [
+                  JsxRuntime.jsx("span", {
+                        children: q,
+                        className: ""
+                      }),
+                  JsxRuntime.jsx("input", {
+                        name: id,
+                        placeholder: "your answer..."
+                      })
+                ],
+                className: ""
+              });
+  };
+}
+
+function Example$Question(Props) {
+  return make(Props.q)(Props.id);
+}
+
+const Question = {
+  make: Example$Question,
+  $$default: Example$Question
+};
+
+function Example$App(Props) {
+  return JsxRuntime.jsxs("form", {
+              children: [
+                JsxRuntime.jsx("div", {
+                      children: JsxRuntime.jsx(Example$Question, {
+                            q: "How many times a day do you sleep?",
+                            id: "sleep"
+                          }),
+                      className: "question"
+                    }),
+                JsxRuntime.jsx("button", {
+                      children: "Submit",
+                      type: "submit"
+                    })
+              ],
+              action: "/submit_questions",
+              formMethod: "POST"
             });
 }
 
-const Greeting = {
-  make: Example$Greeting,
-  $$default: Example$Greeting
+const App = {
+  make: Example$App,
+  $$default: Example$App
 };
 
-const $$default = Example$Greeting;
+const $$default = Example$App;
 
 export {
-  Greeting ,
+  Question ,
+  App ,
   $$default as default,
 }
 /* react/jsx-runtime Not a pure module */
