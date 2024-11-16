@@ -1,0 +1,42 @@
+(version 3.13.0)
+
+(build
+ (progn
+  (when
+   %{pkg-self:dev}
+   (run dune subst))
+  (run
+   dune
+   build
+   -p
+   %{pkg-self:name}
+   -j
+   %{jobs}
+   --promote-install-files=false
+   @install)
+  (run
+   dune
+   install
+   -p
+   %{pkg-self:name}
+   --create-install-files
+   %{pkg-self:name})))
+
+(depends
+ dune
+ ocaml
+ ocamlfind
+ dune-build-info
+ menhir
+ merlin-extend
+ fix
+ ppx_derivers
+ cppo
+ ppxlib)
+
+(source
+ (fetch
+  (url
+   https://github.com/reasonml/reason/releases/download/3.13.0/reason-3.13.0.tbz)
+  (checksum
+   sha256=df2544606bc824a67082e2011826e7a1cde7af0ccb5ba457e937fe018c3ce7e4)))

@@ -1,0 +1,7 @@
+(melange.emit
+ (target generated)
+ (libraries reason-react melange.belt)
+ (promote (until-clean))
+ (preprocess
+  (pps melange.ppx reason-react-ppx))
+ (module_systems es6))
