@@ -2,6 +2,7 @@ let ( let* ) = Result.bind
 
 type state = {
     running: bool;
+    currentIdx: int;
     questions: string array;
     users : (string, string array) Hashtbl.t
 }
@@ -9,7 +10,8 @@ type state = {
 let empty () = {
     running = false;
     questions = Array.make 10 "";
-    users = Hashtbl.create 1
+    users = Hashtbl.create 1;
+    currentIdx = 0;
 }
 
 let valid_chars s =

@@ -11,6 +11,7 @@ import * as Stdlib__String from "melange/string.js";
 function empty(param) {
   return {
           running: false,
+          currentIdx: 0,
           questions: Caml_array.make(10, ""),
           users: Stdlib__Hashtbl.create(undefined, 1)
         };

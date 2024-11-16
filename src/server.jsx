@@ -8,6 +8,20 @@ import { join } from "path";
 import * as fs from "fs";
 //const index = fs.readFileSync("./dist/index.html").toString()
 
+
+const state = Bus.getState()
+state.questions[0] = "foo my bar 1"
+state.questions[1] = "foo my bar 2"
+state.questions[2] = "foo my bar 3"
+state.questions[3] = "foo my bar 4"
+state.questions[4] = "foo my bar 5"
+state.questions[5] = "foo my bar 6"
+state.questions[6] = "foo my bar 7"
+state.questions[7] = "foo my bar 8"
+state.questions[8] = "foo my bar 9"
+state.questions[9] = "foo my bar 10"
+state.running = true
+
 Bus.twitchChat()
 Bus.listen("twitch", (state, tags, msg) => {
     if (!state.running) {

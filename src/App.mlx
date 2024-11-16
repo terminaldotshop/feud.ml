@@ -11,24 +11,51 @@ module Question = struct
   let default = make
 end
 
-module App = struct
-  let[@react.component] make ~state =
-<<<<<<< HEAD
-    <form onSubmit=(fun form ->
-                     Event.Form.preventDefault form;
-                     Event.Form.stopPropagation form;
-                     Js.Console.log "prime")>
-      <span>(string state##count)</span>
-      <div className="text-white">
-        <Question q="How many times a day do you sleep?" id="sleep" />
-=======
-      <div>
-          <div className="text-white">
-            <Question q="How many times a day do you sleep?" id="sleep" />
-          </div>
-          <button type_="submit">(string "Submit")</button>
->>>>>>> 6039443 (feat: i have poop in my butt)
+module NotRunning = struct
+  let[@react.component] make () =
+    <div className="text-white">(string "No active questions")</div>
+  ;;
+end
+
+module Done = struct
+  let[@react.component] make () =
+    <div className="text-white">(string "You are so good at answering")</div>
+  ;;
+end
+
+module Questionaire = struct
+  let[@react.component] make ~question ~setIdx =
+    <div className="">
+      <div className="question">
+        <span className="text-white">(string "Question: ")</span>
+        <span className="text-white">
+          (string question)
+        </span>
       </div>
+      <div className="answer">
+        <input type_="text" name="answer" placeholder="rizz me daddy"/>
+      </div>
+        <button className="text-white" onClick=(fun evt ->
+            setIdx (fun v ->
+                Js.Console.log("v", v);
+                v + 1
+            )
+        )>(string "Next")</button>
+    </div>
+  ;;
+end
+
+module App = struct
+  let[@react.component] make ~(state : Agg.state) =
+    let (idx, setIdx) = useState (fun () -> state.currentIdx) in
+
+    if not state.running then
+        <NotRunning />
+    else if idx < Array.length state.questions then
+        <Questionaire question=state.questions.(idx) setIdx />
+    else (
+        <Done />
+    )
   ;;
 
   let default = make
