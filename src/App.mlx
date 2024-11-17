@@ -2,10 +2,17 @@ open React
 
 type state = Agg.State.t
 
+module Container = struct
+  let[@react.component] make ~children =
+    <div className="gap-4 flex flex-col h-full max-w-[500px] mx-auto">
+      <img src="/public/feud-logo.png" /> children
+    </div>
+  ;;
+end
+
 module Questionaire = struct
   let[@react.component] make ~question ~increment =
-    <div className="gap-4 flex flex-col h-full max-w-[500px] mx-auto">
-      <img src="/public/feud-logo.png" />
+    <Container>
       <div className="p-6 gap-4 flex flex-col">
         <div className="tracking-tight">
           <span className="text-white">(string question)</span>
@@ -19,19 +26,23 @@ module Questionaire = struct
       <button className="bg-[#FF5C00] p-2 rounded text-white" onClick=increment>
         (string "Next")
       </button>
-    </div>
+    </Container>
   ;;
 end
 
 module NotRunning = struct
   let[@react.component] make () =
-    <div className="text-white">(string "No active questions")</div>
+    <Container>
+      <div className="text-white">(string "No active questions")</div>
+    </Container>
   ;;
 end
 
 module Done = struct
   let[@react.component] make () =
-    <div className="text-white">(string "You are so good at answering")</div>
+    <Container>
+      <div className="text-white">(string "You are so good at answering")</div>
+    </Container>
   ;;
 end
 

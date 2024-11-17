@@ -5,13 +5,27 @@ import * as Curry from "melange.js/curry.js";
 import * as React from "react";
 import * as JsxRuntime from "react/jsx-runtime";
 
+function App$Container(Props) {
+  let children = Props.children;
+  return JsxRuntime.jsxs("div", {
+              children: [
+                JsxRuntime.jsx("img", {
+                      src: "/public/feud-logo.png"
+                    }),
+                children
+              ],
+              className: "gap-4 flex flex-col h-full max-w-[500px] mx-auto"
+            });
+}
+
+const Container = {
+  make: App$Container
+};
+
 function make(question) {
   return function (increment) {
-    return JsxRuntime.jsxs("div", {
+    return JsxRuntime.jsxs(App$Container, {
                 children: [
-                  JsxRuntime.jsx("img", {
-                        src: "/public/feud-logo.png"
-                      }),
                   JsxRuntime.jsxs("div", {
                         children: [
                           JsxRuntime.jsx("div", {
@@ -36,8 +50,7 @@ function make(question) {
                         className: "bg-[#FF5C00] p-2 rounded text-white",
                         onClick: increment
                       })
-                ],
-                className: "gap-4 flex flex-col h-full max-w-[500px] mx-auto"
+                ]
               });
   };
 }
@@ -51,9 +64,11 @@ const Questionaire = {
 };
 
 function App$NotRunning(Props) {
-  return JsxRuntime.jsx("div", {
-              children: "No active questions",
-              className: "text-white"
+  return JsxRuntime.jsx(App$Container, {
+              children: JsxRuntime.jsx("div", {
+                    children: "No active questions",
+                    className: "text-white"
+                  })
             });
 }
 
@@ -62,9 +77,11 @@ const NotRunning = {
 };
 
 function App$Done(Props) {
-  return JsxRuntime.jsx("div", {
-              children: "You are so good at answering",
-              className: "text-white"
+  return JsxRuntime.jsx(App$Container, {
+              children: JsxRuntime.jsx("div", {
+                    children: "You are so good at answering",
+                    className: "text-white"
+                  })
             });
 }
 
@@ -154,6 +171,7 @@ const App = {
 const $$default = App$App;
 
 export {
+  Container ,
   Questionaire ,
   NotRunning ,
   Done ,
