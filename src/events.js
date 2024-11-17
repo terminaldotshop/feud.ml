@@ -73,23 +73,10 @@ export function startDashboardClient() {
   let ws = null
   function connect() {
     ws = new WebSocket(process.env.GAME_WS_ENDPOINT);
-    let pingInterval;
 
-    ws.onopen = () => {
-      console.log("WebSocket connection opened.");
-      // Start sending ping messages every 10 seconds
-      pingInterval = setInterval(() => {
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ type: 'ping' }));
-          console.log("Sent ping to server");
-        }
-      }, 10000); // 10 seconds
-    };
-
+    ws.onopen = () => { console.log("WebSocket connection opened."); };
     ws.onclose = (event) => {
       console.log("ws.onclose", event);
-      // Stop the ping messages
-      if (pingInterval) clearInterval(pingInterval);
       console.log("Attempting to reconnect in 1 second...");
       setTimeout(() => {
         connect();
