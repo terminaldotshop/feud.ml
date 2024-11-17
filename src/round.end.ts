@@ -1,4 +1,5 @@
-export function processResponse(msg: FromGPT[]): ToDax {
+export function processResponse(msg: (FromGPT|undefined)[]): ToDax {
+  console.log(msg)
 
   const out: ToDax = {
     type: "survey.closed",
@@ -7,6 +8,10 @@ export function processResponse(msg: FromGPT[]): ToDax {
 
   for (let i = 0; i < msg.length; ++i) {
     const gpt = msg[i];
+    if (!gpt) { 
+      out.answers.push(undefined);
+      continue
+    }
     const round = gpt.values.map(x => ({
       text: x.category,
       values: x.raw,

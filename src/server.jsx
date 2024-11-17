@@ -26,7 +26,7 @@ Bus.listen("twitch", (state, tags, msg) => {
 })
 
 Bus.listen("survey.opened", (state, questions) => {
-  console.log("=> SURVEY OPENED");
+  console.log("=> SURVEY OPENED", questions);
   if (state.running) {
     console.log("-> Already running?")
     return
@@ -44,7 +44,7 @@ Bus.listen("survey.closed", async (state) => {
   state.running = false
   const t = Transform.transform(state)
 
-  for (let i = 0; i < t.questions.length; ++i) {
+  const promptResults = await Promise.allSettled(t.questions.map(async (q, i) => {
     const answers = t.answers[i]
     const proompt = LLM.createProompt(t.questions[i], answers)
     fs.writeFileSync(`./prompt-${i}`, proompt)
@@ -53,11 +53,13 @@ Bus.listen("survey.closed", async (state) => {
     const promptObj = await LLM.promptMeDaddy(proompt)
     console.log("-------- DONE WAITING -----------")
     fs.writeFileSync(`./response-${i}`, JSON.stringify(promptObj))
-    console.log("-------- ABOUT TO PROCESS -----------")
-    const msg = processResponse(promptObj)
-    console.log("-------- PROCESSED -----------")
-    Bus.emit("round-answers", [msg])
-  }
+    return promptObj
+  }));
+
+  console.log("-------- ACOUT TO PROCESS -----------")
+  const msg = processResponse(promptResults.map((x) => { return x.value }))
+  console.log("-------- PROCESSED -----------")
+  Bus.emit("round-answers", msg)
 })
 
 // Import the Bun server module
