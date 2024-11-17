@@ -1,11 +1,11 @@
-import { process_msg } from "./generated/src/agg.js"
+import { State } from "./generated/src/agg.js"
 import * as Bus from "./events.js"
 
 import * as ReactDOMServer from "react-dom/server";
 import App from "./generated/src/App.js";
 
-import { join } from "path";
-import * as fs from "fs";
+// import { join } from "path";
+// import * as fs from "fs";
 //const index = fs.readFileSync("./dist/index.html").toString()
 
 
@@ -16,10 +16,11 @@ state.questions[1] = 'wowow 2'
 
 Bus.startTwitchClient()
 Bus.listen("twitch", (state, tags, msg) => {
+	console.log("new twitch msg", state.running)
     if (!state.running) {
         return
     }
-    process_msg(state, tags, msg)
+    State.process_msg(state, tags, msg)
 })
 
 Bus.listen("round.start", (state, questions) => {
@@ -80,6 +81,8 @@ const server = Bun.serve({
                 status: 200,
             });
         }
+
+		return new Response("???", { status: 404 });
     },
 });
 

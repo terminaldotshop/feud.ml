@@ -1,6 +1,6 @@
-import { empty } from "./generated/src/agg.js"
+import { State } from "./generated/src/agg.js"
 import {Client} from "tmi.js";
-let state = empty()
+let state = State.empty()
 
 export function getState() {
     return state

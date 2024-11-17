@@ -1,14 +1,20 @@
 open React
 
-module Question = struct
-  let[@react.component] make ~q ~id =
+type state = Agg.State.t
+
+module Questionaire = struct
+  let[@react.component] make ~question ~increment =
     <div className="">
-      <span className="">(string q)</span>
-      <input name=id placeholder="your answer..." />
+      <div className="question">
+        <span className="text-white">(string "Question: ")</span>
+        <span className="text-white">(string question)</span>
+      </div>
+      <div className="answer">
+        <input type_="text" name="answer" placeholder="rizz me daddy" />
+      </div>
+      <button className="text-white" onClick=increment>(string "Next")</button>
     </div>
   ;;
-
-  let default = make
 end
 
 module NotRunning = struct
@@ -23,28 +29,7 @@ module Done = struct
   ;;
 end
 
-module Questionaire = struct
-  let[@react.component] make ~question ~setIdx =
-    <div className="">
-      <div className="question">
-        <span className="text-white">(string "Question: ")</span>
-        <span className="text-white">(string question)</span>
-      </div>
-      <div className="answer">
-        <input type_="text" name="answer" placeholder="rizz me daddy" />
-      </div>
-      <button className="text-white"
-              onClick=(fun evt ->
-                        setIdx (fun v ->
-                          Js.Console.log ("v", v);
-                          v + 1))>
-        (string "Next")
-      </button>
-    </div>
-  ;;
-end
-
-let listenWebSocket : string -> (Agg.state -> unit) -> unit -> unit =
+let listenWebSocket : string -> (state -> unit) -> unit -> unit =
   [%mel.raw
     {|
     function(url, callback) {
@@ -63,26 +48,32 @@ let listenWebSocket : string -> (Agg.state -> unit) -> unit -> unit =
 ;;
 
 module App = struct
-  let[@react.component] make ~(state : Agg.state) =
-    let idx, setIdx = useState (fun () -> state.currentIdx) in
-    let running, setRunning = useState (fun () -> state.running) in
-    let questions, setQuestions = useState (fun () -> state.questions) in
-    useEffect (fun () ->
-      let close =
-        listenWebSocket "ws://localhost:3000/ws" (fun (state : Agg.state) ->
-          Js.Console.log state;
-          setRunning (fun _ -> state.running);
-          setQuestions (fun _ -> state.questions))
-      in
-      Some close);
-    if not running
-    then <NotRunning />
-    else if idx < Array.length state.questions
-    then <Questionaire question=state.questions.(idx) setIdx />
-    else <Done />
+  type action =
+    | Replace of state
+    | Increment
+
+  let reducer (state : state) = function
+    | Increment -> { state with currentIdx = state.currentIdx + 1 }
+    | Replace state -> state
   ;;
 
-  let default = make
+  let[@react.component] make ~(state : state) =
+    let state, dispatch = useReducer reducer state in
+    let increment _ = dispatch Increment in
+    useEffect (fun () ->
+      let close =
+        listenWebSocket "ws://localhost:3000/ws" (fun state ->
+          Js.Console.log state;
+          dispatch (Replace state))
+      in
+      Some close);
+    match state with
+    | { running = false; _ } -> <NotRunning />
+    | { currentIdx; _ } when currentIdx < Array.length state.questions ->
+      let question = state.questions.(state.currentIdx) in
+      <Questionaire question increment />
+    | _ -> <Done />
+  ;;
 end
 
 let default = App.make

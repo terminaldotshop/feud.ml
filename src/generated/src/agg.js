@@ -8,15 +8,6 @@ import * as Stdlib__Option from "melange/option.js";
 import * as Stdlib__Result from "melange/result.js";
 import * as Stdlib__String from "melange/string.js";
 
-function empty(param) {
-  return {
-          running: false,
-          currentIdx: 0,
-          questions: Caml_array.make(10, ""),
-          users: Stdlib__Hashtbl.create(undefined, 1)
-        };
-}
-
 function valid_chars(s) {
   return Stdlib__Option.is_none(Stdlib__List.find_opt((function (param) {
                     return Stdlib__String.contains(s, param);
@@ -38,7 +29,7 @@ function valid_chars(s) {
                 }));
 }
 
-function msg_of_string(s) {
+function of_string(s) {
   const splits = Stdlib__String.split_on_char(/* '.' */46, s);
   return Stdlib__Result.bind(splits ? ({
                   TAG: /* Ok */0,
@@ -73,7 +64,7 @@ function msg_of_string(s) {
                         _0: "number out of range"
                       });
                 }
-                return Stdlib__Result.bind(tmp, (function (question) {
+                return Stdlib__Result.bind(tmp, (function (idx) {
                               const answer$1 = Stdlib__String.trim(answer);
                               const match = answer$1.length;
                               const match$1 = valid_chars(answer$1);
@@ -81,10 +72,10 @@ function msg_of_string(s) {
                                 if (match >= 1 && match < 20) {
                                   return {
                                           TAG: /* Ok */0,
-                                          _0: [
-                                            question,
-                                            answer$1
-                                          ]
+                                          _0: {
+                                            idx: idx,
+                                            answer: answer$1
+                                          }
                                         };
                                 } else {
                                   return {
@@ -102,7 +93,22 @@ function msg_of_string(s) {
               }));
 }
 
+const Answer = {
+  valid_chars: valid_chars,
+  of_string: of_string
+};
+
+function empty(param) {
+  return {
+          running: false,
+          currentIdx: 0,
+          questions: Caml_array.make(10, ""),
+          users: Stdlib__Hashtbl.create(undefined, 1)
+        };
+}
+
 function process_msg(state, tags, msg) {
+  console.log("Processing...");
   const name = tags.username;
   const x = Stdlib__Hashtbl.find_opt(state.users, name);
   let arr;
@@ -113,21 +119,26 @@ function process_msg(state, tags, msg) {
     Stdlib__Hashtbl.add(state.users, name, answers);
     arr = answers;
   }
-  return Stdlib__Result.bind(msg_of_string(msg), (function (param) {
+  return Stdlib__Result.bind(of_string(msg), (function (param) {
+                Caml_array.set(arr, param.idx, param.answer);
+                console.log(arr);
                 return {
                         TAG: /* Ok */0,
-                        _0: Caml_array.set(arr, param[0], param[1])
+                        _0: undefined
                       };
               }));
 }
+
+const State = {
+  empty: empty,
+  process_msg: process_msg
+};
 
 const let$star = Stdlib__Result.bind;
 
 export {
   let$star ,
-  empty ,
-  valid_chars ,
-  msg_of_string ,
-  process_msg ,
+  Answer ,
+  State ,
 }
 /* Stdlib__Hashtbl Not a pure module */

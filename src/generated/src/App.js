@@ -5,57 +5,8 @@ import * as Curry from "melange.js/curry.js";
 import * as React from "react";
 import * as JsxRuntime from "react/jsx-runtime";
 
-function make(q) {
-  return function (id) {
-    return JsxRuntime.jsxs("div", {
-                children: [
-                  JsxRuntime.jsx("span", {
-                        children: q,
-                        className: ""
-                      }),
-                  JsxRuntime.jsx("input", {
-                        name: id,
-                        placeholder: "your answer..."
-                      })
-                ],
-                className: ""
-              });
-  };
-}
-
-function App$Question(Props) {
-  return make(Props.q)(Props.id);
-}
-
-const Question = {
-  make: App$Question,
-  $$default: App$Question
-};
-
-function App$NotRunning(Props) {
-  return JsxRuntime.jsx("div", {
-              children: "No active questions",
-              className: "text-white"
-            });
-}
-
-const NotRunning = {
-  make: App$NotRunning
-};
-
-function App$Done(Props) {
-  return JsxRuntime.jsx("div", {
-              children: "You are so good at answering",
-              className: "text-white"
-            });
-}
-
-const Done = {
-  make: App$Done
-};
-
-function make$1(question) {
-  return function (setIdx) {
+function make(question) {
+  return function (increment) {
     return JsxRuntime.jsxs("div", {
                 children: [
                   JsxRuntime.jsxs("div", {
@@ -82,15 +33,7 @@ function make$1(question) {
                   JsxRuntime.jsx("button", {
                         children: "Next",
                         className: "text-white",
-                        onClick: (function (evt) {
-                            Curry._1(setIdx, (function (v) {
-                                    console.log([
-                                          "v",
-                                          v
-                                        ]);
-                                    return v + 1 | 0;
-                                  }));
-                          })
+                        onClick: increment
                       })
                 ],
                 className: ""
@@ -99,11 +42,33 @@ function make$1(question) {
 }
 
 function App$Questionaire(Props) {
-  return make$1(Props.question)(Props.setIdx);
+  return make(Props.question)(Props.increment);
 }
 
 const Questionaire = {
   make: App$Questionaire
+};
+
+function App$NotRunning(Props) {
+  return JsxRuntime.jsx("div", {
+              children: "No active questions",
+              className: "text-white"
+            });
+}
+
+const NotRunning = {
+  make: App$NotRunning
+};
+
+function App$Done(Props) {
+  return JsxRuntime.jsx("div", {
+              children: "You are so good at answering",
+              className: "text-white"
+            });
+}
+
+const Done = {
+  make: App$Done
 };
 
 const listenWebSocket = (function(url, callback) {
@@ -120,57 +85,59 @@ const listenWebSocket = (function(url, callback) {
     }
 );
 
-function App$App(Props) {
-  let state = Props.state;
-  const match = React.useState(function () {
-        return state.currentIdx;
-      });
-  const idx = match[0];
-  const match$1 = React.useState(function () {
-        return state.running;
-      });
-  const setRunning = match$1[1];
-  const match$2 = React.useState(function () {
-        return state.questions;
-      });
-  const setQuestions = match$2[1];
-  React.useEffect(function () {
-        return listenWebSocket("ws://localhost:3000/ws", (function (state) {
-                      console.log(state);
-                      Curry._1(setRunning, (function (param) {
-                              return state.running;
-                            }));
-                      Curry._1(setQuestions, (function (param) {
-                              return state.questions;
-                            }));
-                    }));
-      });
-  if (match$1[0]) {
-    if (idx < state.questions.length) {
-      return JsxRuntime.jsx(App$Questionaire, {
-                  question: Caml_array.get(state.questions, idx),
-                  setIdx: match[1]
-                });
-    } else {
-      return JsxRuntime.jsx(App$Done, {});
-    }
+function reducer(state, state$1) {
+  if (state$1) {
+    return state$1._0;
   } else {
-    return JsxRuntime.jsx(App$NotRunning, {});
+    return {
+            running: state.running,
+            currentIdx: state.currentIdx + 1 | 0,
+            questions: state.questions,
+            users: state.users
+          };
   }
 }
 
+function App$App(Props) {
+  let state = Props.state;
+  const match = React.useReducer(reducer, state);
+  const dispatch = match[1];
+  const state$1 = match[0];
+  const increment = function (param) {
+    Curry._1(dispatch, /* Increment */0);
+  };
+  React.useEffect(function () {
+        return listenWebSocket("ws://localhost:3000/ws", (function (state) {
+                      console.log(state);
+                      Curry._1(dispatch, /* Replace */{
+                            _0: state
+                          });
+                    }));
+      });
+  if (!state$1.running) {
+    return JsxRuntime.jsx(App$NotRunning, {});
+  }
+  if (state$1.currentIdx >= state$1.questions.length) {
+    return JsxRuntime.jsx(App$Done, {});
+  }
+  const question = Caml_array.get(state$1.questions, state$1.currentIdx);
+  return JsxRuntime.jsx(App$Questionaire, {
+              question: question,
+              increment: increment
+            });
+}
+
 const App = {
-  make: App$App,
-  $$default: App$App
+  reducer: reducer,
+  make: App$App
 };
 
 const $$default = App$App;
 
 export {
-  Question ,
+  Questionaire ,
   NotRunning ,
   Done ,
-  Questionaire ,
   listenWebSocket ,
   App ,
   $$default as default,
