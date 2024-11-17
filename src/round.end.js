@@ -1,12 +1,11 @@
-export async function processResponse(msg) {
-  //const msg = parse(promptResponse)
-  //try {
-  //  console.log(JSON.parse(promptResponse))
-  //} catch {
-  //}
-
+export async function processResponse(msg: FromGPT): DaxAnswer {
   const transformed = []
-  for (const [k, v] of Object.entries(msg)) {
+  for (const answer of msg.answers) {
+    console.log(answer);
+  }
+
+  /*
+  for (const [k, v] of Object.entries(msg.)) {
     transformed.push({
       text: k,
       values: v
@@ -17,6 +16,7 @@ export async function processResponse(msg) {
     return b.values.length - a.values.length
   });
 
+  */
   return [transformed.slice(0, 8)];
 }
 

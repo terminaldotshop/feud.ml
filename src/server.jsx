@@ -61,17 +61,6 @@ Bus.listen("survey.closed", async (state) => {
 const server = Bun.serve({
   port: process.env.PORT,
   websocket: {
-    open(ws) {
-      console.log("OPENED!")
-
-      // TODO: REMOVE THIS WHEN WE HAVE REAL DASHBOARD
-      if (!state.running) {
-        setTimeout(() => {
-          state.running = true
-          ws.send(JSON.stringify(state))
-        }, 5000);
-      }
-    },
     message(ws, _) { ws.send(JSON.stringify(state)) },
   },
   fetch: async (req) => {

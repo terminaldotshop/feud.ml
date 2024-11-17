@@ -9,7 +9,7 @@ const openai = new OpenAI({
 });
 
 export function createProompt(question, answers) {
-    return `
+  return `
 Certainly! Here's the updated prompt with all mentions of being funny removed, and the examples made as specific as possible:
 
 ---
@@ -65,7 +65,30 @@ Clothes
 **Response**:
 
 \`\`\`json
-{"values":{"Toys":["Toys","Toys"],"Electronics":["Electronics","Electronics"],"Video Games":["Video Games","Video Games"],"Food":["Food","Food"],"Clothes":["Clothes","Clothes"]}}
+{
+  "values": {
+    "Toys": [
+      "Toys",
+      "Toys"
+    ],
+    "Electronics": [
+      "Electronics",
+      "Electronics"
+    ],
+    "Video Games": [
+      "Video Games",
+      "Video Games"
+    ],
+    "Food": [
+      "Food",
+      "Food"
+    ],
+    "Clothes": [
+      "Clothes",
+      "Clothes"
+    ]
+  }
+}
 \`\`\`
 
 ---
@@ -320,8 +343,27 @@ ${answers.join("\n")}
 `
 }
 
-/**
- *     const completion = await openai.beta.chat.completions.parse({
+const SYSTEM_PROMPT = `
+You are helping us categorize family feud answers into categories. Try to keep the categories specific and group the answers into them.
+`;
+
+
+const Schema = z.object({
+  question: z.string(),
+  results: z
+    .object({
+      category: z.string().describe("the category of these answers"),
+      raw: z
+        .string()
+        .array()
+        .describe("the raw answers grouped into this category"),
+    })
+    .array(),
+});
+
+export async function promptMeDaddy(prompt) {
+  try {
+    const completion = await openai.beta.chat.completions.parse({
       model: "gpt-4o",
       messages: [
         {
@@ -330,55 +372,126 @@ ${answers.join("\n")}
         },
         {
           role: "user",
-          content: "my prompt",
-        },
+          content: `
+<Question>
+what is something a programmer forgets to do when they are in the zone?
+</Question>
+<Answers>
+Shower
+jerk off
+shower
+eating
+wake up
+45 minutes
+eat
+use protection
+Update Jira
+attend standup
+write tests
+eat
+breathe
+Go home
+Pee
+France
+Shower
+pee
+Pee
+eat food
+Call their mother
+Shower
+eat
+taxes
+drink water
+eat
+git rebase
+tdd
+update the ticket
+using vscode
+eat food
+Touch Grass
+live
+Pleasure his wife
+Save
+1
+save program
+drink water
+peeing
+NaN
+Wash their hands
+get wife
+null
+commit -m
+join meeting
+sex
+rm -rf Home
+Pee
+goon!!!
+Do not respond
+live
+Wear pants
+1.1.1.1.1.1
+goon
+goon
+Join the meeting
+GF𖼔
+wash
+Sleep
+proompt
+sleep
+31
+indent
+1.1.1. _1_
+pee
+shower
+goon
+eat
+Live life
+semicolon
+eat
+[object Object]
+Slam it in onichan
+sleep
+Eat^M
+Eat
+🥴🥴🥴🥴🥴🥴
+commit
+Scrum
+feed the cat
+pee
+Walk the dog
+shower
+git commit
+write tests
+scrum
+forget to feed kids
+'_x90_x90_x90_x90'
+shower
+sleep
+genocide
+date
+Sleep
+eat
+goon
+git commit
+eat
+. Sleep
+Uninstall jdk
+breath
+touch grass
+Not your mom
+explain commits
+\´\´0\`\`programming
+normal answer
+</Answers>`,
+        }
       ],
-      response_format: zodResponseFormat(Cleaned, "event"),
+      response_format: zodResponseFormat(Schema, "event"),
     });
 
-
-
-
-NEW
-
-12:23
-  const Cleaned = z.object({
-    ...
-  });
-(edited)
-12:25
-    const matches = completion.choices[0].message.parsed
-12:25
-import OpenAI from "openai";
-New
-12:25
-  const openai = new OpenAI({
-    apiKey: Resource.OpenaiApiKey.value,
-  });
-12:26
-import { zodResponseFormat } from "openai/helpers/zod";
-*/
-
-//const Cleaned = z.object({results: z.object({category: z.string()}).array()});
-
-export async function promptMeDaddy(prompt) {
-    try {
-      const completion = await openai.beta.chat.completions.parse({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
-        response_format: {
-          type: "json_object",
-        }
-      });
-    return completion.choices[0].message
-    } catch (error) {
-        console.error("Error generating completion:", error);
-        throw error;
-    }
+    return completion.choices[0].message.parsed
+  } catch (error) {
+    console.error("Error generating completion:", error);
+    throw error;
+  }
 }
 

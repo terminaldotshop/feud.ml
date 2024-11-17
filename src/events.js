@@ -119,11 +119,7 @@ export function startDashboardClient() {
   }
 
   listen("round-answers", function(objectToSend) {
-    const out = JSON.stringify({
-      type: "survey.closed",
-      answers: objectToSend
-    }, null, 4)
-
+    const out = JSON.stringify(objectToSend, null, 4)
     fs.writeFileSync("./to-dax-from-prime",out)
     ws.send(out);
   });
