@@ -1,11 +1,10 @@
-console.log("here")
-import { State, Transform } from "./generated/src/agg.js"
+console.log("Importing and starting server...")
+
+import { State } from "./generated/src/agg.js"
 import * as Bus from "./events.js"
-import * as LLM from "./llm.js"
 
 import * as ReactDOMServer from "react-dom/server";
 import App from "./generated/src/App.js";
-import * as fs from "fs"
 
 const state = Bus.getState()
 
@@ -18,7 +17,7 @@ Bus.listen("twitch", (state, tags, msg) => {
   if (!state.running) {
     return
   }
-  State.process_msg(state, tags, msg.replaceAll("\\", "_"))
+  State.process_msg(state, tags.username, msg.replaceAll("\\", "_"))
 })
 
 Bus.listen("survey.opened", (state, questions) => {
@@ -30,33 +29,6 @@ Bus.listen("survey.opened", (state, questions) => {
 
   state.running = true
   state.questions = questions
-})
-
-Bus.listen("survey.closed", async (state) => {
-  console.log("SURVEY CLOSED", state.running)
-  if (!state.running) {
-    console.log("  ... But already stopped")
-    return
-  }
-
-  state.running = false
-
-  const t = Transform.transform(state)
-  const promptResults = await Promise.allSettled(t.questions.map(async (_, i) => {
-    const answers = t.answers[i]
-    const proompt = LLM.createProompt(t.questions[i], answers)
-    fs.writeFileSync(`./prompt-${i}`, proompt)
-    console.log("-------- WAITING -----------")
-    const promptObj = await LLM.promptMeDaddy(proompt)
-    console.log("-------- DONE WAITING -----------")
-    fs.writeFileSync(`./response-${i}`, JSON.stringify(promptObj))
-    return promptObj
-  }));
-
-  console.log("-------- ABOUT TO PROCESS -----------")
-  const msg = LLM.processResponse(promptResults.map((x) => { return x.value }))
-  console.log("-------- PROCESSED -----------")
-  Bus.emit("round-answers", msg)
 })
 
 // Import the Bun server module
@@ -80,9 +52,7 @@ export const server = Bun.serve({
         console.log("idx", idx, "answer", answer)
 
         for (let i = 0; i < 5; ++i) {
-          State.process_msg(Bus.getState(), {
-            username: getName(),
-          }, `${idx}.${answer}`)
+          State.process_msg(Bus.getState(), getName(), `${idx}.${answer}`)
         }
 
       } catch { }

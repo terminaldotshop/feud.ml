@@ -105,9 +105,9 @@ export function startDashboardClient() {
   }
 
   listen("round-answers", function(objectToSend) {
-    console.log("-------- round-answers -----------")
+    console.log("dashboard:listen:round-answers")
     const out = JSON.stringify(objectToSend, null, 4)
-    fs.writeFileSync("./to-dax-from-prime",out)
+    fs.writeFileSync("./logs/sent-to-dashboard.txt",out)
     ws.send(out);
   });
 

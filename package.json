@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "automated": "bun run --env-file .env ./src/bin/automated.tsx",
+    "production": "bun run --env-file .env ./src/bin/production.tsx"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",

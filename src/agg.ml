@@ -49,8 +49,7 @@ module State = struct
     }
   ;;
 
-  let process_msg state tags msg =
-    let name = tags##username in
+  let process_msg state name msg =
     let arr =
       match Hashtbl.find_opt state.users name with
       | Some x -> x
@@ -91,6 +90,17 @@ module Transform = struct
       s.users;
     data
   ;;
+
+  (* let random (questions: string array) = *)
+  (*   let state = State.empty () in *)
+  (*   let state = { state with questions = questions } in *)
+  (*   let users = ["teej", "dax", "adam", "prime", "david"] in *)
+  (*   List.iter (fun user -> *)
+  (*     process_msg state  *)
+  (*   let users = Hashtbl.create 5 in *)
+  (*   List.iter (fun user -> *)
+  (*     Hashtbl.add *)
+  (*   assert false *)
 end
 
 module Scores = struct end

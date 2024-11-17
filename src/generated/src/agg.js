@@ -115,8 +115,7 @@ function empty(param) {
         };
 }
 
-function process_msg(state, tags, msg) {
-  const name = tags.username;
+function process_msg(state, name, msg) {
   const x = Stdlib__Hashtbl.find_opt(state.users, name);
   let arr;
   if (x !== undefined) {
