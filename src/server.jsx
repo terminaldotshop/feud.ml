@@ -30,6 +30,7 @@ Bus.listen("survey.opened", (state, questions) => {
 })
 
 Bus.listen("survey.closed", (state) => {
+    console.log("SURVEY CLOSED", state.running)
     if (!state.running) {
         return
     }
@@ -102,5 +103,5 @@ setTimeout(function() {
 
 setTimeout(function() {
     Bus.emit("survey.closed", Bus.getState());
-}, 7 * 1000);
+}, 30 * 1000);
 

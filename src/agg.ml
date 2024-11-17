@@ -55,7 +55,7 @@ module State = struct
       match Hashtbl.find_opt state.users name with
       | Some x -> x
       | None ->
-        let answers = Array.make 10 "" in
+        let answers = Array.make (Array.length state.questions) "" in
         Hashtbl.add state.users name answers;
         answers
     in
@@ -78,8 +78,10 @@ module Transform = struct
       ; answers = Array.make (Array.length s.questions) []
       }
     in
+    Js.Console.log("lens", Array.length data.answers);
     Hashtbl.iter (fun _ value ->
         Array.iteri (fun i answer ->
+            Js.Console.log("Array iterable", Array.length data.answers, i, answer);
             match answer with
             | "" -> ()
             | a -> data.answers.(i) <- answer :: data.answers.(i)

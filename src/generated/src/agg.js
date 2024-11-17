@@ -115,7 +115,7 @@ function process_msg(state, tags, msg) {
   if (x !== undefined) {
     arr = x;
   } else {
-    const answers = Caml_array.make(10, "");
+    const answers = Caml_array.make(state.questions.length, "");
     Stdlib__Hashtbl.add(state.users, name, answers);
     arr = answers;
   }
@@ -144,8 +144,18 @@ function transform(s) {
     questions: data_questions,
     answers: data_answers
   };
+  console.log([
+        "lens",
+        data_answers.length
+      ]);
   Stdlib__Hashtbl.iter((function (param, value) {
           Stdlib__Array.iteri((function (i, answer) {
+                  console.log([
+                        "Array iterable",
+                        data_answers.length,
+                        i,
+                        answer
+                      ]);
                   if (answer === "") {
                     return ;
                   } else {
