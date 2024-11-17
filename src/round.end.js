@@ -1,5 +1,11 @@
 export async function processResponse(promptResponse) {
   const msg = parse(promptResponse)
+  try {
+    console.log(JSON.parse(promptResponse))
+  } catch {
+  }
+
+  console.log("msg", msg, promptResponse)
   const transformed = []
   for (const [k, v] of Object.entries(msg)) {
     transformed.push({
@@ -18,13 +24,19 @@ export async function processResponse(promptResponse) {
 function parse(msg) {
   msg = msg.replaceAll("\\", "_")
   try {
+    console.log("parsing: ", "{\"" + msg)
     return JSON.parse("{\"" + msg)
   } catch (e) {
     try {
-      const parts = msg.split("\n")
-      return JSON.parse(parts.slice(1, parts.length - 1).join("\n"))
+      return JSON.parse(msg)
     } catch (e) {
-      return null
+      console.log(e)
+      try {
+        const parts = msg.split("\n")
+        return JSON.parse(parts.slice(1, parts.length - 1).join("\n"))
+      } catch (e) {
+        return null
+      }
     }
   }
 }

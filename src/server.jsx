@@ -91,12 +91,17 @@ const server = Bun.serve({
         console.log("idx", idx, "answer", answer)
 
         for (let i = 0; i < 5; ++i) {
-          State.process_msg(Bus.getState(), {
+          const res = State.process_msg(Bus.getState(), {
             username: getName(),
           }, `${idx}.${answer}`)
+          console.log("response", res)
         }
 
       } catch { }
+      return new Response("<div>good</div>", {
+        headers: { "Content-Type": "text/html", },
+        status: 200
+      });
     } else if (url.pathname === "/") {
       const app = ReactDOMServer.renderToString(<App state={Bus.getState()} />)
       const index = await Bun.file("./dist/index.html").text()
@@ -127,9 +132,8 @@ const server = Bun.serve({
 console.log(`Server is running at http://localhost:${server.port}`);
 
 setTimeout(function() {
-  console.log("WTF")
   Bus.emit("survey.opened", Bus.getState(), [
-    "How many hours until we are complete?"
+    "What programming language has the most virgins?"
   ]);
 }, 2 * 1000);
 

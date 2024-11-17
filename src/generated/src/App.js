@@ -24,6 +24,7 @@ function make(question) {
                       }),
                   JsxRuntime.jsx("div", {
                         children: JsxRuntime.jsx("input", {
+                              id: "game-answer",
                               name: "answer",
                               placeholder: "rizz me daddy",
                               type: "text"
@@ -88,22 +89,25 @@ const listenWebSocket = (function(url, callback) {
     }
 );
 
-const rawDogFetch = (function(idx, answer) {
-        console.log("answering question", idx, answer)
+const rawDogFetch = (function(idx) {
+      const el = document.querySelector("#game-answer")
+      const answer = el.value
+        console.log("answering question", idx + 1, answer)
 fetch('/answer', {
    method: 'POST',
   headers: {
       'Content-Type': 'application/json',
     },
-  body: JSON.stringify({ idx, answer }),
+  body: JSON.stringify({ idx: idx + 1, answer }),
   })
     }
 );
 
-function reducer(state, state$1) {
-  if (state$1) {
-    return state$1._0;
+function reducer(state, action) {
+  if (action) {
+    return action._0;
   } else {
+    rawDogFetch(state.currentIdx);
     return {
             running: state.running,
             currentIdx: state.currentIdx + 1 | 0,

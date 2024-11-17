@@ -6,6 +6,7 @@ Bus.startDashboardClient()
 
 setTimeout(async function() {
     const response = fs.readFileSync("./response-0").toString()
+  console.log("response", response)
     const msg = await processResponse(response)
     Bus.emit("round-answers", msg)
-}, 5000);
+}, 1000);
