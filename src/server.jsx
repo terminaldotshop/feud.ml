@@ -4,6 +4,7 @@ import * as LLM from "./llm.js"
 
 import * as ReactDOMServer from "react-dom/server";
 import App from "./generated/src/App.js";
+import * as fs from "fs"
 
 const state = Bus.getState()
 
@@ -29,14 +30,25 @@ Bus.listen("survey.opened", (state, questions) => {
     state.questions = questions
 })
 
-Bus.listen("survey.closed", (state) => {
+Bus.listen("survey.closed", async (state) => {
     console.log("SURVEY CLOSED", state.running)
     if (!state.running) {
         return
     }
     state.running = false
     const t = Transform.transform(state)
-    console.log(t)
+
+    const now = Date.now()
+    for (let i = 0; i < t.questions.length; ++i) {
+        const answers = t.answers[i]
+        const proompt = LLM.createProompt(t.questions[i], answers)
+        fs.writeFileSync(`./prompt-${i}`, proompt)
+        console.log("proompt", proompt)
+        const promptResponse = await LLM.proomptMeDaddy(proompt)
+        fs.writeFileSync(`./response-${i}`, promptResponse.content[0].text)
+        const promptAnswers = JSON.parse(promptResponse.content[0].text)
+        console.log("promptResponse", promptAnswers)
+    }
 })
 
 // Import the Bun server module
@@ -97,11 +109,11 @@ console.log(`Server is running at http://localhost:${server.port}`);
 setTimeout(function() {
     console.log("WTF")
     Bus.emit("survey.opened", Bus.getState(), [
-        "Your favorite icecreme flavour?"
+        "What tool/tech/library do you use every day that is embarrassing?"
     ]);
 }, 2 * 1000);
 
 setTimeout(function() {
     Bus.emit("survey.closed", Bus.getState());
-}, 30 * 1000);
+}, 15 * 1000);
 

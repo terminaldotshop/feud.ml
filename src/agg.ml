@@ -60,8 +60,10 @@ module State = struct
         answers
     in
     let* { idx; answer } = Answer.of_string msg in
-    Array.set arr idx answer;
-    Js.Console.log (name, arr);
+    if idx < Array.length state.questions
+    then (
+      Array.set arr idx answer;
+      Js.Console.log (name, arr));
     Ok ()
   ;;
 end
@@ -69,24 +71,24 @@ end
 module Transform = struct
   type t =
     { questions : string array
-    ; answers : string list array
+    ; answers : string Belt.Array.t array
     }
 
   let transform (s : State.t) =
     let data =
       { questions = s.questions
-      ; answers = Array.make (Array.length s.questions) []
+      ; answers = Array.make (Array.length s.questions) (Belt.Array.make 0 "")
       }
     in
-    Js.Console.log("lens", Array.length data.answers);
-    Hashtbl.iter (fun _ value ->
-        Array.iteri (fun i answer ->
-            Js.Console.log("Array iterable", Array.length data.answers, i, answer);
+    Hashtbl.iter
+      (fun _ value ->
+        Array.iteri
+          (fun i answer ->
             match answer with
             | "" -> ()
-            | a -> data.answers.(i) <- answer :: data.answers.(i)
-        ) value
-    ) s.users;
+            | a -> Belt.Array.push data.answers.(i) a)
+          value)
+      s.users;
     data
   ;;
 end
