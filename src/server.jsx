@@ -52,6 +52,10 @@ Bus.listen("survey.closed", async (state) => {
     }
 })
 
+let id = 0
+function getName() {
+    return `audience${++id}`
+}
 // Import the Bun server module
 const server = Bun.serve({
     port: process.env.PORT,
@@ -78,6 +82,16 @@ const server = Bun.serve({
               return; // do not return a Response
             }
             return new Response("Upgrade failed", { status: 500 });
+        } else if (url.pathname === "/answer") {
+            try {
+                const { idx, answer } = await req.json();
+                console.log("idx", idx, "answer", answer)
+
+                State.process_msg(Bus.getState(), {
+                    username: getName(),
+                }, `${idx}.${answer}`)
+
+            } catch { }
         } else if (url.pathname === "/") {
             const app = ReactDOMServer.renderToString(<App state={Bus.getState()} />)
 			const index = await Bun.file("./dist/index.html").text()

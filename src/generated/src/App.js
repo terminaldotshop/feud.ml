@@ -88,6 +88,18 @@ const listenWebSocket = (function(url, callback) {
     }
 );
 
+const rawDogFetch = (function(idx, answer) {
+        console.log("answering question", idx, answer)
+fetch('/answer', {
+   method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+    },
+  body: JSON.stringify({ idx, answer }),
+  })
+    }
+);
+
 function reducer(state, state$1) {
   if (state$1) {
     return state$1._0;
@@ -142,6 +154,7 @@ export {
   NotRunning ,
   Done ,
   listenWebSocket ,
+  rawDogFetch ,
   App ,
   $$default as default,
 }

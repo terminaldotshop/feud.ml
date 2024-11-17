@@ -50,13 +50,30 @@ let listenWebSocket : string -> (state -> unit) -> unit -> unit =
     |}]
 ;;
 
+let rawDogFetch : int -> string -> unit =
+  [%mel.raw
+    {|
+    function(idx, answer) {
+        console.log("answering question", idx, answer)
+fetch('/answer', {
+   method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+    },
+  body: JSON.stringify({ idx, answer }),
+  })
+    }
+    |}]
+;;
 module App = struct
   type action =
     | Replace of state
     | Increment
 
   let reducer (state : state) = function
-    | Increment -> { state with currentIdx = state.currentIdx + 1 }
+    | Increment -> {
+        state with currentIdx = state.currentIdx + 1
+    }
     | Replace state -> state
   ;;
 
