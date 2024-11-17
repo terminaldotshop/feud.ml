@@ -4,15 +4,9 @@ import * as Bus from "./events.js"
 import * as ReactDOMServer from "react-dom/server";
 import App from "./generated/src/App.js";
 
-// import { join } from "path";
-// import * as fs from "fs";
-//const index = fs.readFileSync("./dist/index.html").toString()
-
-
 const state = Bus.getState()
 state.questions[0] = 'yayay 1'
 state.questions[1] = 'wowow 2'
-
 
 Bus.startTwitchClient()
 Bus.listen("twitch", (state, tags, msg) => {
@@ -23,7 +17,7 @@ Bus.listen("twitch", (state, tags, msg) => {
     State.process_msg(state, tags, msg)
 })
 
-Bus.listen("round.start", (state, questions) => {
+Bus.listen("survey.opened", (state, questions) => {
     if (state.running) {
         return
     }
@@ -38,7 +32,7 @@ Bus.listen("round.start", (state, questions) => {
 const server = Bun.serve({
     port: process.env.PORT,
     websocket: {
-		open(ws) { 
+		open(ws) {
 			console.log("OPENED!")
 
 			// TODO: REMOVE THIS WHEN WE HAVE REAL DASHBOARD
