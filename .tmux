@@ -7,7 +7,7 @@ open() {
 
     tmux send-keys -t dune_build "dune build -w --profile=debug" C-m
     tmux send-keys -t bun_build "bun run build --watch" C-m
-    tmux send-keys -t bun_server "bun run --env-file .env --watch ./src/server.jsx |& tee out.yourmom" C-m
+    tmux send-keys -t bun_server "bun run --env-file .env --watch ./src/prime.js |& tee out.yourmom" C-m
 }
 
 close() {

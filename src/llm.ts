@@ -1,11 +1,11 @@
 import { createLLMClient } from "llm-polyglot"
 import Instructor from "@instructor-ai/instructor"
 import { z } from "zod"
+import OpenAI from "openai";
+import { zodResponseFormat } from "openai/helpers/zod";
 
-import * as Bus from "./events.js"
-import Anthropic from '@anthropic-ai/sdk';
-const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY // Make sure to set your API key
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export function createProompt(question, answers) {
@@ -65,13 +65,7 @@ Clothes
 **Response**:
 
 \`\`\`json
-{
-  "Toys": ["Toys", "Toys"],
-  "Electronics": ["Electronics", "Electronics"],
-  "Video Games": ["Video Games", "Video Games"],
-  "Food": ["Food", "Food"],
-  "Clothes": ["Clothes", "Clothes"]
-}
+{"values":{"Toys":["Toys","Toys"],"Electronics":["Electronics","Electronics"],"Video Games":["Video Games","Video Games"],"Food":["Food","Food"],"Clothes":["Clothes","Clothes"]}}
 \`\`\`
 
 ---
@@ -97,14 +91,7 @@ Fireman
 **Response**:
 
 \`\`\`json
-{
-  "Bus Driver": ["Bus Driver", "Bus Driver"],
-  "Trucker": ["Trucker", "Trucker"],
-  "Limo Driver": ["Limo Driver"],
-  "Firefighter": ["Firefighter", "Fireman"],
-  "Construction Worker": ["Construction Worker"],
-  "Postal Delivery": ["Postal Delivery"]
-}
+{"values":{"Bus Driver":["Bus Driver","Bus Driver"],"Trucker":["Trucker","Trucker"],"Limo Driver":["Limo Driver"],"Firefighter":["Firefighter","Fireman"],"Construction Worker":["Construction Worker"],"Postal Delivery":["Postal Delivery"]}}
 \`\`\`
 
 ---
@@ -130,14 +117,7 @@ Communication
 **Response**:
 
 \`\`\`json
-{
-  "Typing": ["Typing", "Typing"],
-  "Working Hard": ["Working Hard", "Working Hard"],
-  "Communication": ["Communication", "Communication"],
-  "Sales": ["Sales"],
-  "Customer Service": ["Customer Service"],
-  "Foreign Language": ["Foreign Language"]
-}
+{"values":{"Typing":["Typing","Typing"],"Working Hard":["Working Hard","Working Hard"],"Communication":["Communication","Communication"],"Sales":["Sales"],"Customer Service":["Customer Service"],"Foreign Language":["Foreign Language"]}}
 \`\`\`
 
 ---
@@ -163,14 +143,7 @@ Grinch
 **Response**:
 
 \`\`\`json
-{
-  "Rudolph": ["Rudolph", "Rudolph"],
-  "Frosty": ["Frosty", "Frosty"],
-  "Grinch": ["Grinch", "Grinch"],
-  "A Christmas Story": ["A Christmas Story"],
-  "It's a Wonderful Life": ["It's a Wonderful Life"],
-  "Home Alone": ["Home Alone"]
-}
+{"values":{"Rudolph":["Rudolph","Rudolph"],"Frosty":["Frosty","Frosty"],"Grinch":["Grinch","Grinch"],"A Christmas Story":["A Christmas Story"],"It's a Wonderful Life":["It's a Wonderful Life"],"Home Alone":["Home Alone"]}}
 \`\`\`
 
 ---
@@ -196,14 +169,7 @@ Las Vegas
 **Response**:
 
 \`\`\`json
-{
-  "Disneyland/Disney World": ["Disneyland", "Disney World"],
-  "Hawaii": ["Hawaii", "Hawii"],
-  "Las Vegas": ["Las Vegas", "Las Vegas"],
-  "Mexico": ["Mexico"],
-  "Grand Canyon": ["Grand Canyon"],
-  "New York City": ["New York City"]
-}
+{"values":{"values":{"Disneyland/Disney World":["Disneyland","Disney World"],"Hawaii":["Hawaii","Hawii"],"Las Vegas":["Las Vegas","Las Vegas"],"Mexico":["Mexico"],"Grand Canyon":["Grand Canyon"],"New York City":["New York City"]}}}
 \`\`\`
 
 ---
@@ -229,14 +195,7 @@ People
 **Response**:
 
 \`\`\`json
-{
-  "Tree": ["Tree", "Tree"],
-  "Rock": ["Rock", "Rock"],
-  "Bump": ["Bump"],
-  "People": ["People", "People"],
-  "Fence": ["Fence"],
-  "Parked Car": ["Parked Car"]
-}
+{"values":{"values":{"Tree":["Tree","Tree"],"Rock":["Rock","Rock"],"Bump":["Bump"],"People":["People","People"],"Fence":["Fence"],"Parked Car":["Parked Car"]}}}
 \`\`\`
 
 ---
@@ -262,14 +221,7 @@ Brown Nose
 **Response**:
 
 \`\`\`json
-{
-  "Bring an Apple": ["Bring an Apple", "Bring an Apple"],
-  "Get Good Grades": ["Get Good Grades", "Get Good Grades"],
-  "Brown Nose": ["Brown Nose", "Brown Nose"],
-  "Do Extra Credit Work": ["Do Extra Credit Work"],
-  "Raise Hand Often": ["Raise Hand Often"],
-  "Sit in Front": ["Sit in Front"]
-}
+{"values":{"values":{"Bring an Apple":["Bring an Apple","Bring an Apple"],"Get Good Grades":["Get Good Grades","Get Good Grades"],"Brown Nose":["Brown Nose","Brown Nose"],"Do Extra Credit Work":["Do Extra Credit Work"],"Raise Hand Often":["Raise Hand Often"],"Sit in Front":["Sit in Front"]}}}
 \`\`\`
 
 ---
@@ -295,14 +247,7 @@ Noon
 **Response**:
 
 \`\`\`json
-{
-  "7 AM": ["7 AM"],
-  "8 AM": ["8 AM", "8"],
-  "9 AM": ["9 AM", "9"],
-  "10 AM": ["10 AM", "10"],
-  "11 AM": ["11 AM"],
-  "Noon": ["Noon"]
-}
+{"values":{"values":{"7 AM":["7 AM"],"8 AM":["8 AM","8"],"9 AM":["9 AM","9"],"10 AM":["10 AM","10"],"11 AM":["11 AM"],"Noon":["Noon"]}}}
 \`\`\`
 
 ---
@@ -328,14 +273,7 @@ Church
 **Response**:
 
 \`\`\`json
-{
-  "Movies": ["Movies", "Movies"],
-  "Airplane": ["Airplane", "Airplane"],
-  "Church": ["Church", "Church"],
-  "Comedy Club": ["Comedy Club"],
-  "Restaurant": ["Restaurant"],
-  "Bus": ["Bus"]
-}
+{"values":{"values":{"Movies":["Movies","Movies"],"Airplane":["Airplane","Airplane"],"Church":["Church","Church"],"Comedy Club":["Comedy Club"],"Restaurant":["Restaurant"],"Bus":["Bus"]}}}
 \`\`\`
 
 ---
@@ -361,14 +299,7 @@ Pass Gas
 **Response**:
 
 \`\`\`json
-{
-  "Change Clothes": ["Change Clothes", "Change Clothes"],
-  "Shower": ["Shower", "Shower"],
-  "Pass Gas": ["Pass Gas", "Pass Gas"],
-  "Run": ["Run"],
-  "Stretch": ["Stretch"],
-  "Dance": ["Dance"]
-}
+{"values":{"values":{"Change Clothes":["Change Clothes","Change Clothes"],"Shower":["Shower","Shower"],"Pass Gas":["Pass Gas","Pass Gas"],"Run":["Run"],"Stretch":["Stretch"],"Dance":["Dance"]}}}
 \`\`\`
 
 ---
@@ -389,15 +320,65 @@ ${answers.join("\n")}
 `
 }
 
-export async function proomptMeDaddy(prompt) {
-    const msg = await anthropic.messages.create({
-        model: 'claude-3-opus-latest',
-        max_tokens: 4096,
-        messages: [
-            { role: "user", content: prompt },
-            { role: "assistant", content: "{\"" },
-        ],
+/**
+ *     const completion = await openai.beta.chat.completions.parse({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content: SYSTEM_PROMPT,
+        },
+        {
+          role: "user",
+          content: "my prompt",
+        },
+      ],
+      response_format: zodResponseFormat(Cleaned, "event"),
     });
 
-    return msg
+
+
+
+NEW
+
+12:23
+  const Cleaned = z.object({
+    ...
+  });
+(edited)
+12:25
+    const matches = completion.choices[0].message.parsed
+12:25
+import OpenAI from "openai";
+New
+12:25
+  const openai = new OpenAI({
+    apiKey: Resource.OpenaiApiKey.value,
+  });
+12:26
+import { zodResponseFormat } from "openai/helpers/zod";
+*/
+
+const Cleaned = z.object({
+  values: z.record(z.string(), z.string().array())
+});
+
+export async function promptMeDaddy(prompt) {
+    try {
+      const completion = await openai.beta.chat.completions.parse({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        response_format: zodResponseFormat(Cleaned, "event"),
+      });
+      console.log(completion)
+    } catch (error) {
+        console.error("Error generating completion:", error);
+        throw error;
+    }
 }
+

@@ -44,8 +44,7 @@ Bus.listen("survey.closed", async (state) => {
         const proompt = LLM.createProompt(t.questions[i], answers)
         fs.writeFileSync(`./prompt-${i}`, proompt)
         console.log("proompt", proompt)
-        // const promptResponse = await LLM.proomptMeDaddy(proompt)
-        const promptResponse = await  LLM.structuredPrompt(prompt)
+        const promptResponse = await LLM.promptMeDaddy(proompt)
         fs.writeFileSync(`./response-${i}`, promptResponse.content[0].text)
         const promptAnswers = JSON.parse(promptResponse.content[0].text)
         console.log("promptResponse", promptAnswers)
@@ -110,15 +109,3 @@ const server = Bun.serve({
 
 // Log server details
 console.log(`Server is running at http://localhost:${server.port}`);
-
-setTimeout(function() {
-    console.log("WTF")
-    Bus.emit("survey.opened", Bus.getState(), [
-        "What tool/tech/library do you use every day that is embarrassing?"
-    ]);
-}, 2 * 1000);
-
-setTimeout(function() {
-    Bus.emit("survey.closed", Bus.getState());
-}, 15 * 1000);
-
