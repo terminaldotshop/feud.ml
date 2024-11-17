@@ -359,9 +359,7 @@ New
 import { zodResponseFormat } from "openai/helpers/zod";
 */
 
-const Cleaned = z.object({
-  values: z.record(z.string(), z.string().array())
-});
+//const Cleaned = z.object({results: z.object({category: z.string()}).array()});
 
 export async function promptMeDaddy(prompt) {
     try {
@@ -373,9 +371,11 @@ export async function promptMeDaddy(prompt) {
             content: prompt,
           },
         ],
-        response_format: zodResponseFormat(Cleaned, "event"),
+        response_format: {
+          type: "json_object",
+        }
       });
-      console.log(completion)
+    return completion.choices[0].message
     } catch (error) {
         console.error("Error generating completion:", error);
         throw error;

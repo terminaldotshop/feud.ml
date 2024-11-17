@@ -1,11 +1,10 @@
-export async function processResponse(promptResponse) {
-  const msg = parse(promptResponse)
-  try {
-    console.log(JSON.parse(promptResponse))
-  } catch {
-  }
+export async function processResponse(msg) {
+  //const msg = parse(promptResponse)
+  //try {
+  //  console.log(JSON.parse(promptResponse))
+  //} catch {
+  //}
 
-  console.log("msg", msg, promptResponse)
   const transformed = []
   for (const [k, v] of Object.entries(msg)) {
     transformed.push({
