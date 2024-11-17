@@ -105,6 +105,7 @@ export function startDashboardClient() {
   }
 
   listen("round-answers", function(objectToSend) {
+    console.log("-------- round-answers -----------")
     const out = JSON.stringify(objectToSend, null, 4)
     fs.writeFileSync("./to-dax-from-prime",out)
     ws.send(out);

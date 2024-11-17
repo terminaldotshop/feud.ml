@@ -49,9 +49,13 @@ Bus.listen("survey.closed", async (state) => {
     const proompt = LLM.createProompt(t.questions[i], answers)
     fs.writeFileSync(`./prompt-${i}`, proompt)
     console.log("proompt", proompt)
+    console.log("-------- WAITING -----------")
     const promptObj = await LLM.promptMeDaddy(proompt)
+    console.log("-------- DONE WAITING -----------")
     fs.writeFileSync(`./response-${i}`, JSON.stringify(promptObj))
+    console.log("-------- ABOUT TO PROCESS -----------")
     const msg = processResponse(promptObj)
+    console.log("-------- PROCESSED -----------")
     Bus.emit("round-answers", [msg])
   }
 })
