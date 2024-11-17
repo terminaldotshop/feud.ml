@@ -63,7 +63,7 @@ export function startTwitchClient() {
 	  return;
 	}
 
-	emit("twitch", state, tags, message)
+	emit("twitch", getState(), tags, message)
   });
 }
 

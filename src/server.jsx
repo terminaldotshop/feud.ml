@@ -1,5 +1,6 @@
-import { State } from "./generated/src/agg.js"
+import { State, Transform } from "./generated/src/agg.js"
 import * as Bus from "./events.js"
+import * as LLM from "./llm.js"
 
 import * as ReactDOMServer from "react-dom/server";
 import App from "./generated/src/App.js";
@@ -19,7 +20,6 @@ Bus.listen("twitch", (state, tags, msg) => {
 
 Bus.listen("survey.opened", (state, questions) => {
 	console.log("=> SURVEY OPENED");
-
     if (state.running) {
 		console.log("-> Already running?")
         return
@@ -27,6 +27,15 @@ Bus.listen("survey.opened", (state, questions) => {
 
     state.running = true
     state.questions = questions
+})
+
+Bus.listen("survey.closed", (state) => {
+    if (!state.running) {
+        return
+    }
+    state.running = false
+    const t = Transform.transform(state)
+    console.log(t)
 })
 
 // Import the Bun server module
@@ -83,3 +92,15 @@ const server = Bun.serve({
 
 // Log server details
 console.log(`Server is running at http://localhost:${server.port}`);
+
+setTimeout(function() {
+    console.log("WTF")
+    Bus.emit("survey.opened", Bus.getState(), [
+        "Your favorite icecreme flavour?"
+    ]);
+}, 2 * 1000);
+
+setTimeout(function() {
+    Bus.emit("survey.closed", Bus.getState());
+}, 7 * 1000);
+

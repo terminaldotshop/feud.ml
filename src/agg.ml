@@ -65,3 +65,26 @@ module State = struct
     Ok ()
   ;;
 end
+
+module Transform = struct
+  type t =
+    { questions : string array
+    ; answers : string list array
+    }
+
+  let transform (s : State.t) =
+    let data =
+      { questions = s.questions
+      ; answers = Array.make (Array.length s.questions) []
+      }
+    in
+    Hashtbl.iter (fun _ value ->
+        Array.iteri (fun i answer ->
+            match answer with
+            | "" -> ()
+            | a -> data.answers.(i) <- answer :: data.answers.(i)
+        ) value
+    ) s.users;
+    data
+  ;;
+end

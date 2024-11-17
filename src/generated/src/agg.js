@@ -2,6 +2,7 @@
 
 import * as Caml_array from "melange.js/caml_array.js";
 import * as Caml_format from "melange.js/caml_format.js";
+import * as Stdlib__Array from "melange/array.js";
 import * as Stdlib__Hashtbl from "melange/hashtbl.js";
 import * as Stdlib__List from "melange/list.js";
 import * as Stdlib__Option from "melange/option.js";
@@ -136,11 +137,38 @@ const State = {
   process_msg: process_msg
 };
 
+function transform(s) {
+  const data_questions = s.questions;
+  const data_answers = Caml_array.make(s.questions.length, /* [] */0);
+  const data = {
+    questions: data_questions,
+    answers: data_answers
+  };
+  Stdlib__Hashtbl.iter((function (param, value) {
+          Stdlib__Array.iteri((function (i, answer) {
+                  if (answer === "") {
+                    return ;
+                  } else {
+                    return Caml_array.set(data_answers, i, {
+                                hd: answer,
+                                tl: Caml_array.get(data_answers, i)
+                              });
+                  }
+                }), value);
+        }), s.users);
+  return data;
+}
+
+const Transform = {
+  transform: transform
+};
+
 const let$star = Stdlib__Result.bind;
 
 export {
   let$star ,
   Answer ,
   State ,
+  Transform ,
 }
 /* Stdlib__Hashtbl Not a pure module */

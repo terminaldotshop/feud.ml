@@ -78,9 +78,12 @@ const listenWebSocket = (function(url, callback) {
             console.log("got message", evt.data)
             try {
                 const data = JSON.parse(evt.data)
-                callback(data, () => { ws.close() })
+                callback(data)
             } catch (e) {
             }
+        }
+        return function() {
+            ws.close()
         }
     }
 );
