@@ -7,7 +7,7 @@ export function processResponse(msg: FromGPT[]): ToDax {
 
   for (let i = 0; i < msg.length; ++i) {
     const gpt = msg[i];
-    const round = gpt.results.map(x => ({
+    const round = gpt.values.map(x => ({
       text: x.category,
       values: x.raw,
     }))

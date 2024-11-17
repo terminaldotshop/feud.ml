@@ -66,28 +66,28 @@ Clothes
 
 \`\`\`json
 {
-  "values": {
-    "Toys": [
+  "values": [
+{ "text": "Toys", "raw": [
       "Toys",
       "Toys"
-    ],
-    "Electronics": [
+    ]},
+{ "text": "Electronics", "raw": [
       "Electronics",
       "Electronics"
-    ],
-    "Video Games": [
+    ]},
+{ "text": "Video Games", "raw": [
       "Video Games",
       "Video Games"
-    ],
-    "Food": [
+    ]},
+{ "text": "Food", "raw": [
       "Food",
       "Food"
-    ],
-    "Clothes": [
+    ]},
+{ "text": "Clothes", "raw": [
       "Clothes",
       "Clothes"
-    ]
-  }
+    ]}
+  ]
 }
 \`\`\`
 
@@ -114,7 +114,31 @@ Fireman
 **Response**:
 
 \`\`\`json
-{"values":{"Bus Driver":["Bus Driver","Bus Driver"],"Trucker":["Trucker","Trucker"],"Limo Driver":["Limo Driver"],"Firefighter":["Firefighter","Fireman"],"Construction Worker":["Construction Worker"],"Postal Delivery":["Postal Delivery"]}}
+{
+  "values": [
+{ "text": "Bus Driver", "raw": [
+      "Bus Driver",
+      "Bus Driver"
+    ]},
+{ "text": "Trucker", "raw": [
+      "Trucker",
+      "Trucker"
+    ]},
+{ "text": "Limo Driver", "raw": [
+      "Limo Driver"
+    ]},
+{ "text": "Firefighter", "raw": [
+      "Firefighter",
+      "Fireman"
+    ]},
+{ "text": "Construction Worker", "raw": [
+      "Construction Worker"
+    ]},
+{ "text": "Postal Delivery", "raw": [
+      "Postal Delivery"
+    ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -140,7 +164,31 @@ Communication
 **Response**:
 
 \`\`\`json
-{"values":{"Typing":["Typing","Typing"],"Working Hard":["Working Hard","Working Hard"],"Communication":["Communication","Communication"],"Sales":["Sales"],"Customer Service":["Customer Service"],"Foreign Language":["Foreign Language"]}}
+{
+  "values": [
+{ "text": "Typing", "raw": [
+      "Typing",
+      "Typing"
+    ]},
+{ "text": "Working Hard", "raw": [
+      "Working Hard",
+      "Working Hard"
+    ]},
+{ "text": "Communication", "raw": [
+      "Communication",
+      "Communication"
+    ]},
+{ "text": "Sales", "raw": [
+      "Sales"
+    ]},
+{ "text": "Customer Service", "raw": [
+      "Customer Service"
+    ]},
+{ "text": "Foreign Language", "raw": [
+      "Foreign Language"
+    ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -166,7 +214,31 @@ Grinch
 **Response**:
 
 \`\`\`json
-{"values":{"Rudolph":["Rudolph","Rudolph"],"Frosty":["Frosty","Frosty"],"Grinch":["Grinch","Grinch"],"A Christmas Story":["A Christmas Story"],"It's a Wonderful Life":["It's a Wonderful Life"],"Home Alone":["Home Alone"]}}
+{
+  "values": [
+{ "text": "Rudolph", "raw": [
+      "Rudolph",
+      "Rudolph"
+    ]},
+{ "text": "Frosty", "raw": [
+      "Frosty",
+      "Frosty"
+    ]},
+{ "text": "Grinch", "raw": [
+      "Grinch",
+      "Grinch"
+    ]},
+{ "text": "A Christmas Story", "raw": [
+      "A Christmas Story"
+    ]},
+{ "text": "It's a Wonderful Life", "raw": [
+      "It's a Wonderful Life"
+    ]},
+{ "text": "Home Alone", "raw": [
+      "Home Alone"
+    ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -192,7 +264,31 @@ Las Vegas
 **Response**:
 
 \`\`\`json
-{"values":{"values":{"Disneyland/Disney World":["Disneyland","Disney World"],"Hawaii":["Hawaii","Hawii"],"Las Vegas":["Las Vegas","Las Vegas"],"Mexico":["Mexico"],"Grand Canyon":["Grand Canyon"],"New York City":["New York City"]}}}
+{
+  "values": [
+{ "text": "Disneyland/Disney World", "raw": [
+      "Disneyland",
+      "Disney World"
+    ]},
+{ "text": "Hawaii", "raw": [
+      "Hawaii",
+      "Hawii"
+    ]},
+{ "text": "Las Vegas", "raw": [
+      "Las Vegas",
+      "Las Vegas"
+    ]},
+{ "text": "Mexico", "raw": [
+      "Mexico"
+    ]},
+{ "text": "Grand Canyon", "raw": [
+      "Grand Canyon"
+    ]},
+{ "text": "New York City", "raw": [
+      "New York City"
+    ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -218,7 +314,31 @@ People
 **Response**:
 
 \`\`\`json
-{"values":{"values":{"Tree":["Tree","Tree"],"Rock":["Rock","Rock"],"Bump":["Bump"],"People":["People","People"],"Fence":["Fence"],"Parked Car":["Parked Car"]}}}
+{
+  "values": [
+{ "text": "Tree", "raw": [
+      "Tree",
+      "Tree"
+    ]},
+{ "text": "Rock", "raw": [
+      "Rock",
+      "Rock"
+    ]},
+{ "text": "Bump", "raw": [
+      "Bump"
+    ]},
+{ "text": "People", "raw": [
+      "People",
+      "People"
+    ]},
+{ "text": "Fence", "raw": [
+      "Fence"
+    ]},
+{ "text": "Parked Car", "raw": [
+      "Parked Car"
+    ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -244,7 +364,31 @@ Brown Nose
 **Response**:
 
 \`\`\`json
-{"values":{"values":{"Bring an Apple":["Bring an Apple","Bring an Apple"],"Get Good Grades":["Get Good Grades","Get Good Grades"],"Brown Nose":["Brown Nose","Brown Nose"],"Do Extra Credit Work":["Do Extra Credit Work"],"Raise Hand Often":["Raise Hand Often"],"Sit in Front":["Sit in Front"]}}}
+{
+  "values": [
+{ "text": "Bring an Apple", "raw": [
+        "Bring an Apple",
+        "Bring an Apple"
+      ]},
+{ "text": "Get Good Grades", "raw": [
+        "Get Good Grades",
+        "Get Good Grades"
+      ]},
+{ "text": "Brown Nose", "raw": [
+        "Brown Nose",
+        "Brown Nose"
+      ]},
+{ "text": "Do Extra Credit Work", "raw": [
+        "Do Extra Credit Work"
+      ]},
+{ "text": "Raise Hand Often", "raw": [
+        "Raise Hand Often"
+      ]},
+{ "text": "Sit in Front", "raw": [
+        "Sit in Front"
+      ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -270,7 +414,31 @@ Noon
 **Response**:
 
 \`\`\`json
-{"values":{"values":{"7 AM":["7 AM"],"8 AM":["8 AM","8"],"9 AM":["9 AM","9"],"10 AM":["10 AM","10"],"11 AM":["11 AM"],"Noon":["Noon"]}}}
+{
+    "values": [
+{ "text": "7 AM", "raw": [
+        "7 AM"
+      ]},
+{ "text": "8 AM", "raw": [
+        "8 AM",
+        "8"
+      ]},
+{ "text": "9 AM", "raw": [
+        "9 AM",
+        "9"
+      ]},
+{ "text": "10 AM", "raw": [
+        "10 AM",
+        "10"
+      ]},
+{ "text": "11 AM", "raw": [
+        "11 AM"
+      ]},
+{ "text": "Noon", "raw": [
+        "Noon"
+      ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -296,7 +464,31 @@ Church
 **Response**:
 
 \`\`\`json
-{"values":{"values":{"Movies":["Movies","Movies"],"Airplane":["Airplane","Airplane"],"Church":["Church","Church"],"Comedy Club":["Comedy Club"],"Restaurant":["Restaurant"],"Bus":["Bus"]}}}
+{
+    "values": [
+{ "text": "Movies", "raw": [
+        "Movies",
+        "Movies"
+      ]},
+{ "text": "Airplane", "raw": [
+        "Airplane",
+        "Airplane"
+      ]},
+{ "text": "Church", "raw": [
+        "Church",
+        "Church"
+      ]},
+{ "text": "Comedy Club", "raw": [
+        "Comedy Club"
+      ]},
+{ "text": "Restaurant", "raw": [
+        "Restaurant"
+      ]},
+{ "text": "Bus", "raw": [
+        "Bus"
+      ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -322,7 +514,31 @@ Pass Gas
 **Response**:
 
 \`\`\`json
-{"values":{"values":{"Change Clothes":["Change Clothes","Change Clothes"],"Shower":["Shower","Shower"],"Pass Gas":["Pass Gas","Pass Gas"],"Run":["Run"],"Stretch":["Stretch"],"Dance":["Dance"]}}}
+{
+    "values": [
+{ "text": "Change Clothes", "raw": [
+        "Change Clothes",
+        "Change Clothes"
+      ]},
+{ "text": "Shower", "raw": [
+        "Shower",
+        "Shower"
+      ]},
+{ "text": "Pass Gas", "raw": [
+        "Pass Gas",
+        "Pass Gas"
+      ]},
+{ "text": "Run", "raw": [
+        "Run"
+      ]},
+{ "text": "Stretch", "raw": [
+        "Stretch"
+      ]},
+{ "text": "Dance", "raw": [
+        "Dance"
+      ]}
+  ]
+}
 \`\`\`
 
 ---
@@ -349,8 +565,7 @@ You are helping us categorize family feud answers into categories. Try to keep t
 
 
 const Schema = z.object({
-  question: z.string(),
-  results: z
+  values: z
     .object({
       category: z.string().describe("the category of these answers"),
       raw: z
@@ -367,122 +582,8 @@ export async function promptMeDaddy(prompt) {
       model: "gpt-4o",
       messages: [
         {
-          role: "system",
-          content: SYSTEM_PROMPT,
-        },
-        {
           role: "user",
-          content: `
-<Question>
-what is something a programmer forgets to do when they are in the zone?
-</Question>
-<Answers>
-Shower
-jerk off
-shower
-eating
-wake up
-45 minutes
-eat
-use protection
-Update Jira
-attend standup
-write tests
-eat
-breathe
-Go home
-Pee
-France
-Shower
-pee
-Pee
-eat food
-Call their mother
-Shower
-eat
-taxes
-drink water
-eat
-git rebase
-tdd
-update the ticket
-using vscode
-eat food
-Touch Grass
-live
-Pleasure his wife
-Save
-1
-save program
-drink water
-peeing
-NaN
-Wash their hands
-get wife
-null
-commit -m
-join meeting
-sex
-rm -rf Home
-Pee
-goon!!!
-Do not respond
-live
-Wear pants
-1.1.1.1.1.1
-goon
-goon
-Join the meeting
-GF𖼔
-wash
-Sleep
-proompt
-sleep
-31
-indent
-1.1.1. _1_
-pee
-shower
-goon
-eat
-Live life
-semicolon
-eat
-[object Object]
-Slam it in onichan
-sleep
-Eat^M
-Eat
-🥴🥴🥴🥴🥴🥴
-commit
-Scrum
-feed the cat
-pee
-Walk the dog
-shower
-git commit
-write tests
-scrum
-forget to feed kids
-'_x90_x90_x90_x90'
-shower
-sleep
-genocide
-date
-Sleep
-eat
-goon
-git commit
-eat
-. Sleep
-Uninstall jdk
-breath
-touch grass
-Not your mom
-explain commits
-\´\´0\`\`programming
-normal answer
-</Answers>`,
+          content: prompt,
         }
       ],
       response_format: zodResponseFormat(Schema, "event"),
@@ -490,6 +591,7 @@ normal answer
 
     return completion.choices[0].message.parsed
   } catch (error) {
+    // TODO make sure that i send dax some event about bad round
     console.error("Error generating completion:", error);
     throw error;
   }

@@ -10,7 +10,6 @@ export function getState() {
 const listeners = { }
 export function emit(type, ...args) {
     const cbs = listeners[type]
-    console.log("BUS#emit", type)
     if (!cbs || cbs.length === 0) {
         return
     }

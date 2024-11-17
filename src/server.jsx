@@ -1,3 +1,4 @@
+console.log("here")
 import { State, Transform } from "./generated/src/agg.js"
 import * as Bus from "./events.js"
 import * as LLM from "./llm.js"
@@ -5,7 +6,7 @@ import * as LLM from "./llm.js"
 import * as ReactDOMServer from "react-dom/server";
 import App from "./generated/src/App.js";
 import * as fs from "fs"
-import { processResponse } from "./round.end.js";
+import { processResponse } from "./round.end.ts";
 
 const state = Bus.getState()
 
@@ -18,7 +19,6 @@ function getName() {
 }
 
 Bus.listen("twitch", (state, tags, msg) => {
-  console.log("new twitch msg: runnig =", state.running)
   if (!state.running) {
     return
   }
@@ -44,7 +44,6 @@ Bus.listen("survey.closed", async (state) => {
   state.running = false
   const t = Transform.transform(state)
 
-  const now = Date.now()
   for (let i = 0; i < t.questions.length; ++i) {
     const answers = t.answers[i]
     const proompt = LLM.createProompt(t.questions[i], answers)
@@ -53,7 +52,7 @@ Bus.listen("survey.closed", async (state) => {
     const promptObj = await LLM.promptMeDaddy(proompt)
     fs.writeFileSync(`./response-${i}`, JSON.stringify(promptObj))
     const msg = processResponse(promptObj)
-    console.log(msg)
+    Bus.emit("round-answers", [msg])
   }
 })
 

@@ -15,8 +15,7 @@ declare global {
       raw: string[]
     }
   type FromGPT = {
-    question: string
-    results: GPTGroup[]
+    values: GPTGroup[]
   }
 }
 
