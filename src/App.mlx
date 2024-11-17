@@ -4,18 +4,21 @@ type state = Agg.State.t
 
 module Questionaire = struct
   let[@react.component] make ~question ~increment =
-    <div className="">
-      <div className="question">
-        <span className="text-white">(string "Question: ")</span>
-        <span className="text-white">(string question)</span>
-      </div>
-      <div className="answer">
+    <div className="gap-4 flex flex-col h-full max-w-[500px] mx-auto">
+      <img src="/public/feud-logo.png" />
+      <div className="p-6 gap-4 flex flex-col">
+        <div className="tracking-tight">
+          <span className="text-white">(string question)</span>
+        </div>
         <input id="game-answer"
+               className="bg-[#242424] p-2 rounded"
                type_="text"
                name="answer"
-               placeholder="rizz me daddy" />
+               placeholder="answer" />
       </div>
-      <button className="text-white" onClick=increment>(string "Next")</button>
+      <button className="bg-[#FF5C00] p-2 rounded text-white" onClick=increment>
+        (string "Next")
+      </button>
     </div>
   ;;
 end

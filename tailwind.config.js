@@ -8,7 +8,11 @@ export default {
 		"./vendor/**/*.{js,jsx,ts,tsx}",
 	],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        geist: "Geist Mono, monospace",
+      }
+    },
   },
   plugins: [],
 }

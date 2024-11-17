@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link href="./index.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
+    <link href="./index.css" rel="stylesheet" />
     <title>Terminal Feud</title>
   </head>
-  <body class="bg-black p-4">
+  <body class="bg-black p-4 font-geist">
     <div id="root" class="w-full min-h-screen"><!--app-html--></div>
     <script>
-    	window.state = __STATE__
+      window.state = __STATE__
     </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>

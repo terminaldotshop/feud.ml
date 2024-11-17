@@ -9,35 +9,35 @@ function make(question) {
   return function (increment) {
     return JsxRuntime.jsxs("div", {
                 children: [
+                  JsxRuntime.jsx("img", {
+                        src: "/public/feud-logo.png"
+                      }),
                   JsxRuntime.jsxs("div", {
                         children: [
-                          JsxRuntime.jsx("span", {
-                                children: "Question: ",
-                                className: "text-white"
+                          JsxRuntime.jsx("div", {
+                                children: JsxRuntime.jsx("span", {
+                                      children: question,
+                                      className: "text-white"
+                                    }),
+                                className: "tracking-tight"
                               }),
-                          JsxRuntime.jsx("span", {
-                                children: question,
-                                className: "text-white"
+                          JsxRuntime.jsx("input", {
+                                className: "bg-[#242424] p-2 rounded",
+                                id: "game-answer",
+                                name: "answer",
+                                placeholder: "answer",
+                                type: "text"
                               })
                         ],
-                        className: "question"
-                      }),
-                  JsxRuntime.jsx("div", {
-                        children: JsxRuntime.jsx("input", {
-                              id: "game-answer",
-                              name: "answer",
-                              placeholder: "rizz me daddy",
-                              type: "text"
-                            }),
-                        className: "answer"
+                        className: "p-6 gap-4 flex flex-col"
                       }),
                   JsxRuntime.jsx("button", {
                         children: "Next",
-                        className: "text-white",
+                        className: "bg-[#FF5C00] p-2 rounded text-white",
                         onClick: increment
                       })
                 ],
-                className: ""
+                className: "gap-4 flex flex-col h-full max-w-[500px] mx-auto"
               });
   };
 }
