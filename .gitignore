@@ -71,3 +71,7 @@ esy.lock/
 
 profile.dump
 dev-tools.locks/
+
+prompt-*
+response-*
+to-dax-from-prime

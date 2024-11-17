@@ -169,6 +169,8 @@ const Transform = {
   transform: transform
 };
 
+const Scores = {};
+
 const let$star = Stdlib__Result.bind;
 
 export {
@@ -176,5 +178,6 @@ export {
   Answer ,
   State ,
   Transform ,
+  Scores ,
 }
 /* Stdlib__Hashtbl Not a pure module */
