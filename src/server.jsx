@@ -10,19 +10,11 @@ import * as fs from "fs";
 
 
 const state = Bus.getState()
-state.questions[0] = "foo my bar 1"
-state.questions[1] = "foo my bar 2"
-state.questions[2] = "foo my bar 3"
-state.questions[3] = "foo my bar 4"
-state.questions[4] = "foo my bar 5"
-state.questions[5] = "foo my bar 6"
-state.questions[6] = "foo my bar 7"
-state.questions[7] = "foo my bar 8"
-state.questions[8] = "foo my bar 9"
-state.questions[9] = "foo my bar 10"
-state.running = true
+state.questions[0] = 'yayay 1'
+state.questions[1] = 'wowow 2'
 
-Bus.twitchChat()
+
+Bus.startTwitchClient()
 Bus.listen("twitch", (state, tags, msg) => {
     if (!state.running) {
         return
@@ -43,16 +35,22 @@ Bus.listen("round.start", (state, questions) => {
 
 // Import the Bun server module
 const server = Bun.serve({
-    websocket: {
-        message(ws, message) {
-            ws.send(JSON.stringify(Bus.getState()))
-        },
-        open(ws) {
-            ws.send(JSON.stringify(Bus.getState()))
-        },
-    },
     port: process.env.PORT,
-    fetch(req) {
+    websocket: {
+		open(ws) { 
+			console.log("OPENED!")
+
+			// TODO: REMOVE THIS WHEN WE HAVE REAL DASHBOARD
+			if (!state.running) {
+				setTimeout(() => {
+					state.running = true
+					ws.send(JSON.stringify(state))
+				}, 5000);
+			}
+		},
+        message(ws, _) { ws.send(JSON.stringify(state)) },
+    },
+	fetch: async (req) => {
         const url = new URL(req.url);
 
         // Simple routing logic
@@ -63,7 +61,7 @@ const server = Bun.serve({
             return new Response("Upgrade failed", { status: 500 });
         } else if (url.pathname === "/") {
             const app = ReactDOMServer.renderToString(<App state={Bus.getState()} />)
-            const index = fs.readFileSync("./dist/index.html").toString()
+			const index = await Bun.file("./dist/index.html").text()
             const html = index.
                 replace("<!--app-html-->", app).
                 replace("__STATE__", JSON.stringify(Bus.getState(), function(k, v) {
@@ -74,14 +72,11 @@ const server = Bun.serve({
                 }))
 
             return new Response(html, {
-                headers: {
-                    "Content-Type": "text/html",
-                },
+                headers: { "Content-Type": "text/html", },
                 status: 200
             });
         } else if (url.pathname.startsWith("/assets")) {
-            const index = Bun.file(`./dist${url.pathname}`)
-            return new Response(index, {
+            return new Response(Bun.file(`./dist${url.pathname}`), {
                 status: 200,
             });
         }

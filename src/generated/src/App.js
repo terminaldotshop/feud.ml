@@ -113,15 +113,10 @@ const listenWebSocket = (function(url, callback) {
             console.log("got message", evt.data)
             try {
                 const data = JSON.parse(evt.data)
-                callback(data)
+                callback(data, () => { ws.close() })
             } catch (e) {
             }
-            }
-
-        setTimeout(function() {
-            console.log("sending")
-            ws.send("hello, tj")
-        }, 1000);
+        }
     }
 );
 
@@ -131,12 +126,26 @@ function App$App(Props) {
         return state.currentIdx;
       });
   const idx = match[0];
-  React.useEffect(function () {
-        listenWebSocket("ws://localhost:3000/ws", (function (state) {
-                console.log(state);
-              }));
+  const match$1 = React.useState(function () {
+        return state.running;
       });
-  if (state.running) {
+  const setRunning = match$1[1];
+  const match$2 = React.useState(function () {
+        return state.questions;
+      });
+  const setQuestions = match$2[1];
+  React.useEffect(function () {
+        return listenWebSocket("ws://localhost:3000/ws", (function (state) {
+                      console.log(state);
+                      Curry._1(setRunning, (function (param) {
+                              return state.running;
+                            }));
+                      Curry._1(setQuestions, (function (param) {
+                              return state.questions;
+                            }));
+                    }));
+      });
+  if (match$1[0]) {
     if (idx < state.questions.length) {
       return JsxRuntime.jsx(App$Questionaire, {
                   question: Caml_array.get(state.questions, idx),

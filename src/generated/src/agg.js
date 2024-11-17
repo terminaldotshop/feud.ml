@@ -24,7 +24,16 @@ function valid_chars(s) {
                   hd: /* '<' */60,
                   tl: {
                     hd: /* '>' */62,
-                    tl: /* [] */0
+                    tl: {
+                      hd: /* '&' */38,
+                      tl: {
+                        hd: /* '?' */63,
+                        tl: {
+                          hd: /* '/' */47,
+                          tl: /* [] */0
+                        }
+                      }
+                    }
                   }
                 }));
 }
@@ -39,7 +48,7 @@ function msg_of_string(s) {
                   ]
                 }) : ({
                   TAG: /* Error */1,
-                  _0: "??? -- NICE TRY GUY --"
+                  _0: "Doesn't contain a period"
                 }), (function (param) {
                 const answer = param[1];
                 let tmp;
@@ -52,7 +61,7 @@ function msg_of_string(s) {
                 catch (exn){
                   tmp = {
                     TAG: /* Error */1,
-                    _0: "bad input"
+                    _0: "not an integer before period"
                   };
                 }
                 if (exit === 1) {
@@ -61,25 +70,32 @@ function msg_of_string(s) {
                         _0: q - 1 | 0
                       }) : ({
                         TAG: /* Error */1,
-                        _0: "bad input"
+                        _0: "number out of range"
                       });
                 }
                 return Stdlib__Result.bind(tmp, (function (question) {
                               const answer$1 = Stdlib__String.trim(answer);
                               const match = answer$1.length;
                               const match$1 = valid_chars(answer$1);
-                              if (match$1 && match >= 1 && match < 20) {
-                                return {
-                                        TAG: /* Ok */0,
-                                        _0: [
-                                          question,
-                                          answer$1
-                                        ]
-                                      };
+                              if (match$1) {
+                                if (match >= 1 && match < 20) {
+                                  return {
+                                          TAG: /* Ok */0,
+                                          _0: [
+                                            question,
+                                            answer$1
+                                          ]
+                                        };
+                                } else {
+                                  return {
+                                          TAG: /* Error */1,
+                                          _0: "Input is invalid length"
+                                        };
+                                }
                               } else {
                                 return {
                                         TAG: /* Error */1,
-                                        _0: "bad input"
+                                        _0: "Input contains invalid characters"
                                       };
                               }
                             }));
@@ -88,10 +104,10 @@ function msg_of_string(s) {
 
 function process_msg(state, tags, msg) {
   const name = tags.username;
-  const out = Stdlib__Hashtbl.find_opt(state.users, name);
+  const x = Stdlib__Hashtbl.find_opt(state.users, name);
   let arr;
-  if (out !== undefined) {
-    arr = out;
+  if (x !== undefined) {
+    arr = x;
   } else {
     const answers = Caml_array.make(10, "");
     Stdlib__Hashtbl.add(state.users, name, answers);

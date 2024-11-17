@@ -46,8 +46,7 @@ export function emitBySocket(ws) {
     })
 }
 
-export function twitchChat() {
-
+export function startTwitchClient() {
     // Create a client for read-only access (anonymous connection)
     const client = new Client({
         connection: {

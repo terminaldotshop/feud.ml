@@ -44,8 +44,9 @@ module Questionaire = struct
   ;;
 end
 
-let listenWebSocket: string -> (Agg.state -> unit) -> unit =
-    [%mel.raw {|
+let listenWebSocket : string -> (Agg.state -> unit) -> unit -> unit =
+  [%mel.raw
+    {|
     function(url, callback) {
         console.log("listening to websocket", url)
         const ws = new WebSocket(url)
@@ -53,26 +54,28 @@ let listenWebSocket: string -> (Agg.state -> unit) -> unit =
             console.log("got message", evt.data)
             try {
                 const data = JSON.parse(evt.data)
-                callback(data)
+                callback(data, () => { ws.close() })
             } catch (e) {
             }
-            }
-
-        setTimeout(function() {
-            console.log("sending")
-            ws.send("hello, tj")
-        }, 1000);
+        }
     }
     |}]
+;;
 
 module App = struct
   let[@react.component] make ~(state : Agg.state) =
     let idx, setIdx = useState (fun () -> state.currentIdx) in
+    let running, setRunning = useState (fun () -> state.running) in
+    let questions, setQuestions = useState (fun () -> state.questions) in
     useEffect (fun () ->
-      listenWebSocket "ws://localhost:3000/ws" (fun (state : Agg.state) ->
-        Js.Console.log state);
-      None);
-    if not state.running
+      let close =
+        listenWebSocket "ws://localhost:3000/ws" (fun (state : Agg.state) ->
+          Js.Console.log state;
+          setRunning (fun _ -> state.running);
+          setQuestions (fun _ -> state.questions))
+      in
+      Some close);
+    if not running
     then <NotRunning />
     else if idx < Array.length state.questions
     then <Questionaire question=state.questions.(idx) setIdx />
