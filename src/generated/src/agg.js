@@ -108,7 +108,6 @@ function empty(param) {
 }
 
 function process_msg(state, tags, msg) {
-  console.log("Processing...");
   const name = tags.username;
   const x = Stdlib__Hashtbl.find_opt(state.users, name);
   let arr;
@@ -121,7 +120,10 @@ function process_msg(state, tags, msg) {
   }
   return Stdlib__Result.bind(of_string(msg), (function (param) {
                 Caml_array.set(arr, param.idx, param.answer);
-                console.log(arr);
+                console.log([
+                      name,
+                      arr
+                    ]);
                 return {
                         TAG: /* Ok */0,
                         _0: undefined

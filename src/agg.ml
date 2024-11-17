@@ -50,7 +50,6 @@ module State = struct
   ;;
 
   let process_msg state tags msg =
-    Js.Console.log "Processing...";
     let name = tags##username in
     let arr =
       match Hashtbl.find_opt state.users name with
@@ -62,7 +61,7 @@ module State = struct
     in
     let* { idx; answer } = Answer.of_string msg in
     Array.set arr idx answer;
-    Js.Console.log arr;
+    Js.Console.log (name, arr);
     Ok ()
   ;;
 end

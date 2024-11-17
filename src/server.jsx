@@ -5,12 +5,12 @@ import * as ReactDOMServer from "react-dom/server";
 import App from "./generated/src/App.js";
 
 const state = Bus.getState()
-state.questions[0] = 'yayay 1'
-state.questions[1] = 'wowow 2'
 
+Bus.startDashboardClient()
 Bus.startTwitchClient()
+
 Bus.listen("twitch", (state, tags, msg) => {
-	console.log("new twitch msg", state.running)
+	console.log("new twitch msg: runnig =", state.running)
     if (!state.running) {
         return
     }
@@ -18,14 +18,15 @@ Bus.listen("twitch", (state, tags, msg) => {
 })
 
 Bus.listen("survey.opened", (state, questions) => {
+	console.log("=> SURVEY OPENED");
+
     if (state.running) {
+		console.log("-> Already running?")
         return
     }
+
     state.running = true
     state.questions = questions
-    setTimeout(function() {
-        state.running = false
-    }, 5000);
 })
 
 // Import the Bun server module
