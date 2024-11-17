@@ -389,39 +389,10 @@ ${answers.join("\n")}
 `
 }
 
-const structured = createLLMClient({
-  provider: "anthropic",
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
-
-const responseSchema = z.record(z.array(z.string()))
-const instructor = Instructor<typeof anthropicClient>({
-  client: structured,
-  mode: "TOOLS"
-})
-
-export async function structuredPrompt(prompt) {
-  const response = await instructor.chat.completions.create({
-        model: 'claude-3-5-sonnet-latest',
-        max_tokens: 8192,
-        messages: [
-            { role: "user", content: prompt },
-        ],
-        response_model: {
-          name: "extract_response",
-          schema: responseSchema
-        }
-  })
-
-  console.log(response);
-
-  return response;
-}
-
 export async function proomptMeDaddy(prompt) {
     const msg = await anthropic.messages.create({
-        model: 'claude-3-5-sonnet-latest',
-        max_tokens: 8192,
+        model: 'claude-3-opus-latest',
+        max_tokens: 4096,
         messages: [
             { role: "user", content: prompt },
             { role: "assistant", content: "{\"" },

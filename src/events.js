@@ -1,5 +1,6 @@
 import { State } from "./generated/src/agg.js"
 import {Client} from "tmi.js";
+import * as fs from "fs"
 
 let state = State.empty()
 export function getState() {
@@ -69,8 +70,9 @@ export function startTwitchClient() {
 }
 
 export function startDashboardClient() {
+  let ws = null
   function connect() {
-    const ws = new WebSocket(process.env.GAME_WS_ENDPOINT);
+    ws = new WebSocket(process.env.GAME_WS_ENDPOINT);
     let pingInterval;
 
     ws.onopen = () => {
@@ -115,6 +117,16 @@ export function startDashboardClient() {
       }
     };
   }
+
+  listen("round-answers", function(objectToSend) {
+    const out = JSON.stringify({
+      type: "survey.closed",
+      answers: objectToSend
+    }, null, 4)
+
+    fs.writeFileSync("./to-dax-from-prime",out)
+    ws.send(out);
+  });
 
   connect();
 }

@@ -7,7 +7,7 @@ module Answer = struct
     }
 
   let valid_chars s =
-    [ '<'; '>'; '&'; '?'; '/' ]
+    [ '<'; '>'; '&'; '?'; '/'; '\\' ]
     |> List.find_opt (String.contains s)
     |> Option.is_none
   ;;
