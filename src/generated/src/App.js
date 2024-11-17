@@ -2,6 +2,7 @@
 
 import * as Caml_array from "melange.js/caml_array.js";
 import * as Curry from "melange.js/curry.js";
+import * as Stdlib__Format from "melange/format.js";
 import * as React from "react";
 import * as JsxRuntime from "react/jsx-runtime";
 
@@ -23,40 +24,74 @@ const Container = {
 };
 
 function make(question) {
-  return function (increment) {
-    return JsxRuntime.jsxs(App$Container, {
-                children: [
-                  JsxRuntime.jsxs("div", {
-                        children: [
-                          JsxRuntime.jsx("div", {
-                                children: JsxRuntime.jsx("span", {
-                                      children: question,
-                                      className: "text-white"
-                                    }),
-                                className: "tracking-tight"
-                              }),
-                          JsxRuntime.jsx("input", {
-                                className: "bg-[#242424] p-2 rounded",
-                                id: "game-answer",
-                                name: "answer",
-                                placeholder: "answer",
-                                type: "text"
-                              })
-                        ],
-                        className: "p-6 gap-4 flex flex-col"
-                      }),
-                  JsxRuntime.jsx("button", {
-                        children: "Next",
-                        className: "bg-[#FF5C00] p-2 rounded text-white",
-                        onClick: increment
-                      })
-                ]
-              });
+  return function (index) {
+    return function (count) {
+      return function (increment) {
+        return JsxRuntime.jsxs(App$Container, {
+                    children: [
+                      JsxRuntime.jsxs("div", {
+                            children: [
+                              JsxRuntime.jsx("div", {
+                                    children: JsxRuntime.jsx("span", {
+                                          children: Curry._2(Stdlib__Format.sprintf(/* Format */{
+                                                    _0: {
+                                                      TAG: /* String_literal */11,
+                                                      _0: "Question ",
+                                                      _1: {
+                                                        TAG: /* Int */4,
+                                                        _0: /* Int_d */0,
+                                                        _1: /* No_padding */0,
+                                                        _2: /* No_precision */0,
+                                                        _3: {
+                                                          TAG: /* String_literal */11,
+                                                          _0: " / ",
+                                                          _1: {
+                                                            TAG: /* Int */4,
+                                                            _0: /* Int_d */0,
+                                                            _1: /* No_padding */0,
+                                                            _2: /* No_precision */0,
+                                                            _3: /* End_of_format */0
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    _1: "Question %d / %d"
+                                                  }), index, count),
+                                          className: "text-white"
+                                        }),
+                                    className: "tracking-tight"
+                                  }),
+                              JsxRuntime.jsx("div", {
+                                    children: JsxRuntime.jsx("span", {
+                                          children: question,
+                                          className: "text-white"
+                                        }),
+                                    className: "tracking-tight"
+                                  }),
+                              JsxRuntime.jsx("input", {
+                                    className: "bg-[#242424] p-2 rounded",
+                                    id: "game-answer",
+                                    name: "answer",
+                                    placeholder: "answer",
+                                    type: "text"
+                                  })
+                            ],
+                            className: "p-6 gap-4 flex flex-col"
+                          }),
+                      JsxRuntime.jsx("button", {
+                            children: "Next",
+                            className: "bg-[#FF5C00] p-2 rounded text-white",
+                            onClick: increment
+                          })
+                    ]
+                  });
+      };
+    };
   };
 }
 
 function App$Questionaire(Props) {
-  return make(Props.question)(Props.increment);
+  return Curry._2(make(Props.question)(Props.index), Props.count, Props.increment);
 }
 
 const Questionaire = {
@@ -65,9 +100,16 @@ const Questionaire = {
 
 function App$NotRunning(Props) {
   return JsxRuntime.jsx(App$Container, {
-              children: JsxRuntime.jsx("div", {
-                    children: "No active questions",
-                    className: "text-white"
+              children: JsxRuntime.jsxs("div", {
+                    children: [
+                      JsxRuntime.jsx("div", {
+                            children: "We are not currently collecting questions"
+                          }),
+                      JsxRuntime.jsx("div", {
+                            children: "This page will update when we are ready!"
+                          })
+                    ],
+                    className: "flex flex-col text-white mx-auto"
                   })
             });
 }
@@ -79,7 +121,7 @@ const NotRunning = {
 function App$Done(Props) {
   return JsxRuntime.jsx(App$Container, {
               children: JsxRuntime.jsx("div", {
-                    children: "You are so good at answering",
+                    children: "Thanks for playing! Your answers are being tabulated and calculated",
                     className: "text-white"
                   })
             });
@@ -153,12 +195,16 @@ function App$App(Props) {
   if (!state$1.running) {
     return JsxRuntime.jsx(App$NotRunning, {});
   }
-  if (state$1.currentIdx >= state$1.questions.length) {
+  const currentIdx = state$1.currentIdx;
+  if (currentIdx >= state$1.questions.length) {
     return JsxRuntime.jsx(App$Done, {});
   }
   const question = Caml_array.get(state$1.questions, state$1.currentIdx);
+  const count = state$1.questions.length;
   return JsxRuntime.jsx(App$Questionaire, {
               question: question,
+              index: currentIdx,
+              count: count,
               increment: increment
             });
 }
@@ -180,4 +226,4 @@ export {
   App ,
   $$default as default,
 }
-/* react Not a pure module */
+/* Stdlib__Format Not a pure module */

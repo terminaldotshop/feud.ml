@@ -11,9 +11,14 @@ module Container = struct
 end
 
 module Questionaire = struct
-  let[@react.component] make ~question ~increment =
+  let[@react.component] make ~question ~index ~count ~increment =
     <Container>
       <div className="p-6 gap-4 flex flex-col">
+        <div className="tracking-tight">
+          <span className="text-white">
+            (string @@ Format.sprintf "Question %d / %d" index count)
+          </span>
+        </div>
         <div className="tracking-tight">
           <span className="text-white">(string question)</span>
         </div>
@@ -33,7 +38,10 @@ end
 module NotRunning = struct
   let[@react.component] make () =
     <Container>
-      <div className="text-white">(string "No active questions")</div>
+      <div className="flex flex-col text-white mx-auto">
+        <div>(string "We are not currently collecting questions")</div>
+        <div>(string "This page will update when we are ready!")</div>
+      </div>
     </Container>
   ;;
 end
@@ -41,7 +49,10 @@ end
 module Done = struct
   let[@react.component] make () =
     <Container>
-      <div className="text-white">(string "You are so good at answering")</div>
+      <div className="text-white">
+        (string
+           "Thanks for playing! Your answers are being tabulated and calculated")
+      </div>
     </Container>
   ;;
 end
@@ -112,7 +123,9 @@ module App = struct
     | { running = false; _ } -> <NotRunning />
     | { currentIdx; _ } when currentIdx < Array.length state.questions ->
       let question = state.questions.(state.currentIdx) in
-      <Questionaire question increment />
+      let index = currentIdx in
+      let count = Array.length state.questions in
+      <Questionaire question index count increment />
     | _ -> <Done />
   ;;
 end

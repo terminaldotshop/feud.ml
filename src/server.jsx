@@ -7,6 +7,8 @@ import App from "./generated/src/App.js";
 import * as fs from "fs"
 
 const state = Bus.getState()
+// state.running= true;
+// state.questions = ["This is the first question?"]
 
 Bus.startDashboardClient()
 Bus.startTwitchClient()
@@ -57,14 +59,6 @@ const server = Bun.serve({
     websocket: {
 		open(ws) {
 			console.log("OPENED!")
-
-			// TODO: REMOVE THIS WHEN WE HAVE REAL DASHBOARD
-			if (!state.running) {
-				setTimeout(() => {
-					state.running = true
-					ws.send(JSON.stringify(state))
-				}, 5000);
-			}
 		},
         message(ws, _) { ws.send(JSON.stringify(state)) },
     },
