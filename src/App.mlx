@@ -13,7 +13,7 @@ end
 module Questionaire = struct
   let[@react.component] make ~question ~index ~count ~increment =
     <Container>
-      <div className="p-6 gap-4 flex flex-col">
+      <div className="p-6 gap-4 flex flex-col text-white">
         <div className="tracking-tight">
           <span className="text-white">
             (string @@ Format.sprintf "Question %d / %d" index count)
@@ -123,7 +123,7 @@ module App = struct
     | { running = false; _ } -> <NotRunning />
     | { currentIdx; _ } when currentIdx < Array.length state.questions ->
       let question = state.questions.(state.currentIdx) in
-      let index = currentIdx in
+      let index = currentIdx + 1 in
       let count = Array.length state.questions in
       <Questionaire question index count increment />
     | _ -> <Done />

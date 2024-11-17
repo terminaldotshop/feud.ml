@@ -76,7 +76,7 @@ function make(question) {
                                     type: "text"
                                   })
                             ],
-                            className: "p-6 gap-4 flex flex-col"
+                            className: "p-6 gap-4 flex flex-col text-white"
                           }),
                       JsxRuntime.jsx("button", {
                             children: "Next",
@@ -200,10 +200,11 @@ function App$App(Props) {
     return JsxRuntime.jsx(App$Done, {});
   }
   const question = Caml_array.get(state$1.questions, state$1.currentIdx);
+  const index = currentIdx + 1 | 0;
   const count = state$1.questions.length;
   return JsxRuntime.jsx(App$Questionaire, {
               question: question,
-              index: currentIdx,
+              index: index,
               count: count,
               increment: increment
             });
