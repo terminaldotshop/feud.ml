@@ -5,7 +5,7 @@ import { server } from "../server.jsx"
 import * as Bus from "../events.js"
 
 let state = Bus.getState()
-state.running = true
+state.running = false
 state.questions = [
   "This is the first question",
   "This is the second question",
