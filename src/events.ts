@@ -1,15 +1,18 @@
+import * as Track from "./app-state.ts"
 import { State } from "./generated/src/agg.js"
 import { Client } from "tmi.js";
 import * as fs from "fs"
 
 // Define a mapping of event types to their associated arguments
 type EventMap = {
+  "survey.closed": (state: AppState) => void
   "survey.opened": (state: AppState, questions: string[]) => void
   "twitch": (state: AppState, tags: {username: string}, message: string) => void
   "round-answers": (toDax: ToDax) => void
 };
 
-let state = State.empty()
+let state: AppState = Track.reset(State.empty())
+
 export function getState(): AppState {
   return state
 }
@@ -36,21 +39,6 @@ export function listen<K extends keyof EventMap>(type: K, cb: EventMap[K]) {
   }
 
   cbs.push(cb)
-}
-
-export function emitBySocket(ws) {
-  ws.addEventListener("message", msg => {
-    try {
-      const parsed: DaxMessage = JSON.parse(msg)
-      const t = parsed.type
-      if (t !== "survey.opened") {
-        return
-      }
-
-      emit("survey.opened", state, parsed.questions)
-    } catch (e) {
-    }
-  })
 }
 
 export function startTwitchClient() {
@@ -106,7 +94,7 @@ export function startDashboardClient() {
     ws.onmessage = (msg) => {
       try {
         console.log(msg.data);
-        const data = JSON.parse(msg.data);
+        const data: DaxMessage = JSON.parse(msg.data);
         const ty = data.type;
         if (ty === "survey.opened") {
           if (!Array.isArray(data.questions)) {
@@ -125,7 +113,10 @@ export function startDashboardClient() {
     const out = JSON.stringify(objectToSend, null, 4)
     fs.writeFileSync("./logs/sent-to-dashboard.txt", out)
     if (ws !== null) {
+      Track.sentDax(getState());
       ws.send(out);
+    } else {
+      Track.cannotSendDax(getState(), "ws === null while sending to dax");
     }
   });
 

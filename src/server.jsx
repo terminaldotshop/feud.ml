@@ -2,6 +2,7 @@ console.log("Importing and starting server...")
 
 import { State } from "./generated/src/agg.js"
 import * as Bus from "./events.js"
+import * as Track from "./app-state.ts"
 
 import * as ReactDOMServer from "react-dom/server";
 import App from "./generated/src/App.js";
@@ -21,6 +22,7 @@ Bus.listen("twitch", (state, tags, msg) => {
 })
 
 Bus.listen("survey.opened", (state, questions) => {
+  Track.surveyOpened(state)
   console.log("=> SURVEY OPENED", questions);
   if (state.running) {
     console.log("-> Already running?")

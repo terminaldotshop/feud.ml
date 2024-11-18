@@ -19,20 +19,43 @@ declare global {
   }
 
   type TrackingState = {
+    messages: {
+      twitch: number,
+      audience: number,
+    },
+    state?: "open" | "closed"
     questions?: string[]
     prompt?: {
       prompts: string[]
       sent: boolean[]
     }
-    responses?: string[]
+    responses?: (FromGPT | null)[]
     toDax?: {
-      data: ToDax
+      data: ToDax | null
       sent: boolean
+      failReason: string
     }
   }
 
+  type PromptedTrackingState = TrackingState & {
+    prompt: {
+      prompts: string[]
+      sent: boolean[]
+    }
+  }
+
+  type ResponsedTrackingState = TrackingState & {
+    responses: (FromGPT | null)[]
+  }
+
+  type PartialAppState = {
+    running: boolean
+    currentIdx: number
+    questions: string[]
+  }
+
   type AppState = {
-    tracking?: TrackingState
+    tracking: TrackingState
     running: boolean
     currentIdx: number
     questions: string[]

@@ -576,7 +576,7 @@ const Schema = z.object({
     .array(),
 });
 
-export async function promptMeDaddy(prompt) {
+export async function promptMeDaddy(prompt: string): Promise<FromGPT | null> {
   try {
     const completion = await openai.beta.chat.completions.parse({
       model: "gpt-4o",
