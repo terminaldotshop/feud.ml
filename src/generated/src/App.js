@@ -2,7 +2,9 @@
 
 import * as Caml_array from "melange.js/caml_array.js";
 import * as Curry from "melange.js/curry.js";
+import * as Stdlib__Array from "melange/array.js";
 import * as Stdlib__Format from "melange/format.js";
+import * as Stdlib__List from "melange/list.js";
 import * as React from "react";
 import * as JsxRuntime from "react/jsx-runtime";
 
@@ -15,7 +17,7 @@ function App$Container(Props) {
                     }),
                 children
               ],
-              className: "min-h-screen max-w-[500px] mx-auto tracking-tight flex flex-col"
+              className: "gap-4 flex flex-col h-full max-w-[500px] mx-auto"
             });
 }
 
@@ -27,16 +29,16 @@ function make(question) {
   return function (index) {
     return function (count) {
       return function (increment) {
-        return JsxRuntime.jsx(App$Container, {
-                    children: JsxRuntime.jsxs("form", {
-                          children: [
-                            JsxRuntime.jsxs("div", {
-                                  children: [
-                                    JsxRuntime.jsx("div", {
+        return JsxRuntime.jsxs(App$Container, {
+                    children: [
+                      JsxRuntime.jsxs("div", {
+                            children: [
+                              JsxRuntime.jsx("div", {
+                                    children: JsxRuntime.jsx("span", {
                                           children: Curry._2(Stdlib__Format.sprintf(/* Format */{
                                                     _0: {
                                                       TAG: /* String_literal */11,
-                                                      _0: "question ",
+                                                      _0: "Question ",
                                                       _1: {
                                                         TAG: /* Int */4,
                                                         _0: /* Int_d */0,
@@ -55,35 +57,35 @@ function make(question) {
                                                         }
                                                       }
                                                     },
-                                                    _1: "question %d / %d"
+                                                    _1: "Question %d / %d"
                                                   }), index, count),
-                                          className: "text-muted px-4"
+                                          className: "text-white"
                                         }),
-                                    JsxRuntime.jsx("label", {
+                                    className: "tracking-tight"
+                                  }),
+                              JsxRuntime.jsx("div", {
+                                    children: JsxRuntime.jsx("span", {
                                           children: question,
-                                          className: "text-white px-4 font-medium",
-                                          htmlFor: "game-answer"
+                                          className: "text-white"
                                         }),
-                                    JsxRuntime.jsx("input", {
-                                          className: "bg-white bg-opacity-[12%] py-2 px-4 text-[#B7B7B7] focus:bg-[#220B00] focus:ring-1 focus:ring-inset focus:ring-[#FF5C00] outline-none focus:outline-none",
-                                          id: "game-answer",
-                                          autoFocus: true,
-                                          name: "answer",
-                                          placeholder: "answer",
-                                          type: "text"
-                                        })
-                                  ],
-                                  className: "flex flex-col gap-6"
-                                }),
-                            JsxRuntime.jsx("button", {
-                                  children: "next",
-                                  className: "bg-brand py-2 px-4 text-white font-semibold text-lg",
-                                  type: "submit"
-                                })
-                          ],
-                          className: "p-6 h-full grow h-full flex flex-col justify-between",
-                          onSubmit: increment
-                        })
+                                    className: "tracking-tight"
+                                  }),
+                              JsxRuntime.jsx("input", {
+                                    className: "bg-[#242424] p-2 rounded",
+                                    id: "game-answer",
+                                    name: "answer",
+                                    placeholder: "answer",
+                                    type: "text"
+                                  })
+                            ],
+                            className: "p-6 gap-4 flex flex-col text-white"
+                          }),
+                      JsxRuntime.jsx("button", {
+                            children: "Next",
+                            className: "bg-[#FF5C00] p-2 rounded text-white",
+                            onClick: increment
+                          })
+                    ]
                   });
       };
     };
@@ -103,20 +105,13 @@ function App$NotRunning(Props) {
               children: JsxRuntime.jsxs("div", {
                     children: [
                       JsxRuntime.jsx("div", {
-                            children: "// ready to play?"
+                            children: "We are not currently collecting questions"
                           }),
                       JsxRuntime.jsx("div", {
-                            children: "// give quick short answers..."
-                          }),
-                      JsxRuntime.jsx("div", {
-                            children: "// this page will update automatically",
-                            className: "mt-4"
-                          }),
-                      JsxRuntime.jsx("div", {
-                            children: "// when the survey beings, hang tight"
+                            children: "This page will update when we are ready!"
                           })
                     ],
-                    className: "flex flex-col mx-auto text-muted"
+                    className: "flex flex-col text-white mx-auto"
                   })
             });
 }
@@ -126,10 +121,67 @@ const NotRunning = {
 };
 
 function App$Done(Props) {
+  const allLines_0 = JsxRuntime.jsx("div", {
+        children: "... Calculating cool categories"
+      });
+  const allLines_1 = {
+    hd: JsxRuntime.jsx("div", {
+          children: "... Running advanced design patterns",
+          className: "text-red-300"
+        }),
+    tl: {
+      hd: JsxRuntime.jsx("div", {
+            children: "... KEVIN SAYS HI"
+          }),
+      tl: {
+        hd: JsxRuntime.jsx("div", {
+              children: "line 4"
+            }),
+        tl: {
+          hd: JsxRuntime.jsx("div", {
+                children: "line 5"
+              }),
+          tl: {
+            hd: JsxRuntime.jsx("div", {
+                  children: "line 6"
+                }),
+            tl: {
+              hd: JsxRuntime.jsx("div", {
+                    children: "line 7"
+                  }),
+              tl: /* [] */0
+            }
+          }
+        }
+      }
+    }
+  };
+  const allLines = {
+    hd: allLines_0,
+    tl: allLines_1
+  };
+  const match = React.useState(function () {
+        return 0;
+      });
+  const setidx = match[1];
+  const idx = match[0];
+  const timeout_function = function (param) {
+    if (idx < Stdlib__List.length(allLines)) {
+      return Curry._1(setidx, (function (i) {
+                    return i + 1 | 0;
+                  }));
+    }
+    
+  };
+  setTimeout(timeout_function, 1000);
+  const displayLines = Caml_array.make(idx, null);
+  Stdlib__Array.iteri((function (idx, param) {
+          Caml_array.set(displayLines, idx, Stdlib__List.nth(allLines, idx));
+        }), displayLines);
   return JsxRuntime.jsx(App$Container, {
               children: JsxRuntime.jsx("div", {
-                    children: "Thanks for playing! Your answers are being tabulated and calculated",
-                    className: "text-white"
+                    children: displayLines,
+                    className: "text-white flex flex-col justify-end"
                   })
             });
 }
