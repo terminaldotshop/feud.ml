@@ -10,15 +10,18 @@ import App from "./generated/src/App.js";
 const state = Bus.getState()
 
 let id = 0
-function getName() {
-  return `audience${++id}`
+function getName(): {username: string} {
+  return {
+    username: `audience${++id}`
+  }
 }
 
-Bus.listen("twitch", (state, tags, msg) => {
+Bus.listen("survey.message", (state, type, tags, msg) => {
   if (!state.running) {
     return
   }
   State.process_msg(state, tags.username, msg.replaceAll("\\", "_"))
+  Track.messageReceived(type, tags.username, msg)
 })
 
 Bus.listen("survey.opened", (state, questions) => {
@@ -31,12 +34,13 @@ Bus.listen("survey.opened", (state, questions) => {
 
   state.running = true
   state.questions = questions
+  Track.questionsReceived(state, questions)
   sync_states()
 })
 
 const LOCAL_TESTING = true;
 
-let sockets = new Set();
+let sockets = new Set<any>();
 function sync_states() {
   for (const socket of sockets) {
     socket.send(JSON.stringify(state))
@@ -63,15 +67,14 @@ export const server = Bun.serve({
     }  else if (url.pathname === "/answer") {
       try {
         const { idx, answer } = await req.json();
-        Bus.emit("audience", getName(), `${idx}.${answer}`)
-        console.log("idx", idx, "answer", answer)
 
         for (let i = 0; i < 5; ++i) {
-          State.process_msg(Bus.getState(), getName(), `${idx}.${answer}`)
+          Bus.emit("survey.message", state, "audience", getName(), `${idx}.${answer}`)
         }
 
       } catch { }
     } else if (url.pathname === "/") {
+      // @ts-ignore
       const app = ReactDOMServer.renderToString(<App state={Bus.getState()} />)
       const index = await Bun.file("./dist/index.html").text()
       const html = index.

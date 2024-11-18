@@ -98,18 +98,11 @@ export function reset(s: PartialAppState | AppState): AppState {
 
 let sendId: NodeJS.Timeout | null = null
 const messageQueue: string[] = []
-export function pushTwitchMessage(msg: string) {
+export function messageReceived(type: "twitch" | "audience", from: string, msg: string) {
   try {
-    messageQueue.push(`twitch: ${msg}`)
+    messageQueue.push(`${from}(${type}): ${msg}`)
+    ensureFlush()
   } catch { }
-  ensureFlush()
-}
-
-export function pushAudienceMessage(msg: string) {
-  try {
-    messageQueue.push(`audience: ${msg}`)
-  } catch { }
-  ensureFlush()
 }
 
 function ensureFlush() {
@@ -123,5 +116,6 @@ function ensureFlush() {
       await appendFile("./messages.log", out)
     } catch { }
     sendId = null
+    messageQueue.length = 0
   }, 2000);
 }

@@ -7,7 +7,7 @@ import * as fs from "fs"
 type EventMap = {
   "survey.closed": (state: AppState) => void
   "survey.opened": (state: AppState, questions: string[]) => void
-  "twitch": (state: AppState, tags: {username: string}, message: string) => void
+  "survey.message": (state: AppState, type: "twitch" | "audience", tags: {username: string}, message: string) => void
   "round-answers": (toDax: ToDax) => void
 };
 
@@ -62,7 +62,7 @@ export function startTwitchClient() {
       return;
     }
 
-    emit("twitch", getState(), tags, message)
+    emit("survey.message", getState(), "twitch", tags, message)
   });
 }
 
