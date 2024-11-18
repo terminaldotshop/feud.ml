@@ -32,7 +32,12 @@ Bus.listen("survey.closed", async (state: any) => {
   }));
 
   console.log("[production] Processing LLM Responses ")
-  const msg = LLM.processResponse(promptResults.map((x) => { return x.value }))
+  const msg = LLM.processResponse(promptResults.map((x) => {
+    if (x.status === "rejected") {
+      return undefined
+    }
+    return x.value
+  }))
   console.log("[production] Sending Round Answers")
   Bus.emit("round-answers", msg)
 })

@@ -29,12 +29,13 @@ Bus.listen("survey.opened", (state, questions) => {
 
   state.running = true
   state.questions = questions
+  sync_states()
 })
 
 const LOCAL_TESTING = true;
 
 let sockets = new Set();
-let sync_states = () => {
+function sync_states() {
   for (const socket of sockets) {
     socket.send(JSON.stringify(state))
   }
