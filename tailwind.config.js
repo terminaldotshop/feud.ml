@@ -16,6 +16,7 @@ export default {
       colors: {
         brand: "#FF5C00",
         muted: "#969696",
+        blue: "#0090FF",
       },
     },
   },
