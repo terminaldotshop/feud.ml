@@ -57,4 +57,4 @@ Bus.listen("survey.closed", async (state: AppState) => {
 })
 
 // Log server to make sure that the file is required and loaded...
-console.log("[production] ... completed setup", server);
+console.log("[production] ... completed setup", server.url);
