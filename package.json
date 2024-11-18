@@ -9,6 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "automated": "bun run --env-file .env ./src/bin/automated.tsx",
+    "automated_dax": "bun run --env-file .env ./src/bin/manual.socket.ts",
+    "state": "bun run --env-file .env ./src/bin/currentState.ts",
     "production": "bun run --env-file .env ./src/bin/production.tsx"
   },
   "dependencies": {

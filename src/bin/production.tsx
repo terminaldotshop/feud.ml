@@ -11,6 +11,12 @@ import { Transform } from "../generated/src/agg.js"
 Bus.startDashboardClient()
 Bus.startTwitchClient()
 
+const statePath = process.env.STATE_PATH
+if (!statePath) {
+  throw new Error("you must have STATE_PATH specified in env.  this is so we can track the state of the server")
+}
+Track.enableSaveInterval(statePath, 10000)
+
 Bus.listen("survey.closed", async (state: AppState) => {
   Track.surveyClosed(state)
 

@@ -20,12 +20,15 @@ Bus.listen("survey.message", (state, type, tags, msg) => {
   if (!state.running) {
     return
   }
+  Track.messageReceived(state, type, tags.username, msg)
   State.process_msg(state, tags.username, msg.replaceAll("\\", "_"))
-  Track.messageReceived(type, tags.username, msg)
 })
 
 Bus.listen("survey.opened", (state, questions) => {
+  Track.reset(state)
   Track.surveyOpened(state)
+  Track.questionsReceived(state, questions)
+
   console.log("=> SURVEY OPENED", questions);
   if (state.running) {
     console.log("-> Already running?")
@@ -34,7 +37,6 @@ Bus.listen("survey.opened", (state, questions) => {
 
   state.running = true
   state.questions = questions
-  Track.questionsReceived(state, questions)
   sync_states()
 })
 
@@ -64,6 +66,11 @@ export const server = Bun.serve({
         return; // do not return a Response
       }
       return new Response("Upgrade failed", { status: 500 });
+    }  else if (url.pathname === "/fake-twitch-msg") {
+      try {
+        const { idx, answer, name } = await req.json();
+        Bus.emit("survey.message", state, "twitch", {username: name}, `${idx}.${answer}`)
+      } catch { }
     }  else if (url.pathname === "/answer") {
       try {
         const { idx, answer } = await req.json();

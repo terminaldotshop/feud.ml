@@ -81,7 +81,7 @@ export function responseReceived(s: AppState, response: FromGPT | null, position
 }
 
 export function questionsReceived(s: AppState, questions: string[]): void {
-  s.questions = questions
+  s.tracking.questions = questions
 }
 
 export function reset(s: PartialAppState | AppState): AppState {
@@ -98,8 +98,9 @@ export function reset(s: PartialAppState | AppState): AppState {
 
 let sendId: NodeJS.Timeout | null = null
 const messageQueue: string[] = []
-export function messageReceived(type: "twitch" | "audience", from: string, msg: string) {
+export function messageReceived(state: AppState, type: "twitch" | "audience", from: string, msg: string) {
   try {
+    state.tracking.messages[type]++
     messageQueue.push(`${from}(${type}): ${msg}`)
     ensureFlush()
   } catch { }
