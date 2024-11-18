@@ -14,7 +14,10 @@ module Questionaire = struct
   let[@react.component] make ~question ~index ~count ~increment =
     <Container>
       <form className="px-6 pb-6 grow h-full flex flex-col justify-between"
-            onSubmit=increment>
+            onSubmit=(fun e ->
+              Event.Form.preventDefault(e);
+              Event.Form.stopPropagation(e);
+              increment())>
         <div className="flex flex-col gap-6">
           <div className="text-muted px-4">
             (string @@ Format.sprintf "question %d / %d" index count)

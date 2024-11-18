@@ -84,7 +84,11 @@ function make(question) {
                                 })
                           ],
                           className: "px-6 pb-6 grow h-full flex flex-col justify-between",
-                          onSubmit: increment
+                          onSubmit: (function (e) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              Curry._1(increment, undefined);
+                            })
                         })
                   });
       };
