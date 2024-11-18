@@ -434,7 +434,8 @@ const Done = {
 
 const listenWebSocket = (function(url, callback) {
         console.log("listening to websocket", url)
-        const ws = new WebSocket(url)
+        // "ws://localhost:3000/ws"
+        const ws = new WebSocket(`ws://${location.host}/ws`)
         ws.onmessage = function(evt) {
             console.log("got message", evt.data)
             try {
@@ -486,12 +487,14 @@ function App$App(Props) {
     Curry._1(dispatch, /* Increment */0);
   };
   React.useEffect(function () {
-        return listenWebSocket("ws://localhost:3000/ws", (function (state) {
-                      console.log(state);
-                      Curry._1(dispatch, /* Replace */{
-                            _0: state
-                          });
-                    }));
+        return (function (param) {
+                  return listenWebSocket((function (state) {
+                                console.log(state);
+                                Curry._1(dispatch, /* Replace */{
+                                      _0: state
+                                    });
+                              }), param);
+                });
       });
   if (!state$1.running) {
     return JsxRuntime.jsx(App$NotRunning, {});

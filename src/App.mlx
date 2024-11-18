@@ -180,12 +180,13 @@ module Done = struct
   ;;
 end
 
-let listenWebSocket : string -> (state -> unit) -> unit -> unit =
+let listenWebSocket : (state -> unit) -> unit -> unit =
   [%mel.raw
     {|
     function(url, callback) {
         console.log("listening to websocket", url)
-        const ws = new WebSocket(url)
+        // "ws://localhost:3000/ws"
+        const ws = new WebSocket(`ws://${location.host}/ws`)
         ws.onmessage = function(evt) {
             console.log("got message", evt.data)
             try {
@@ -237,7 +238,7 @@ module App = struct
     let increment _ = dispatch Increment in
     useEffect (fun () ->
       let close =
-        listenWebSocket "ws://localhost:3000/ws" (fun state ->
+        listenWebSocket (fun state ->
           Js.Console.log state;
           dispatch (Replace state))
       in
