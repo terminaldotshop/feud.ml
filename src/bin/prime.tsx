@@ -8,9 +8,3 @@ import * as Bus from "../events.ts"
 //         "What's the third answer?",
 //     ]);
 // }, 2 * 1000);
-
-Bus.listen("survey.opened", function() {
-  setTimeout(function() {
-    Bus.emit("survey.closed", Bus.getState());
-  }, 45 * 1000);
-})

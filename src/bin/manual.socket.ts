@@ -26,40 +26,175 @@ const adjs = [
   "angry",
 ]
 
+const answers = [
+  "react",
+  "angular",
+  "htmx",
+  "vue.js",
+  "I love",
+  "penis",
+  "pen15",
+  "8==D",
+  "8=D",
+  "8===D",
+  "z\"ig",
+  "zig",
+  "c++",
+  "complete nonsense poop pants",
+  "sex",
+  "handjob",
+  "cum",
+  "come on me",
+  "do not come",
+  "Donald Trump",
+  "Sadness",
+  "I made mistakes in my life",
+  "Unit tests",
+  "API",
+  "Function",
+  "Variable",
+  "Class",
+  "Object",
+  "Loop",
+  "Array",
+  "Debug",
+  "Compile",
+  "Refactor",
+  "Async",
+  "Await",
+  "Callback",
+  "Parameter",
+  "Argument",
+  "Interface",
+  "Module",
+  "Dependency",
+  "Library",
+  "Framework",
+  "Commit",
+  "Push",
+  "Pull",
+  "Merge",
+  "Branch",
+  "Conflict",
+  "Build",
+  "Test",
+  "Deploy",
+  "Production",
+  "Staging",
+  "DevOps",
+  "CI/CD",
+  "Pipeline",
+  "Environment",
+  "Server",
+  "Client",
+  "Endpoint",
+  "Query",
+  "Mutation",
+  "Schema",
+  "Middleware",
+  "Token",
+  "Authentication",
+  "Authorization",
+  "Encryption",
+  "SSL",
+  "Certificate",
+  "HTTP",
+  "Protocol",
+  "Socket",
+  "Port",
+  "Proxy",
+  "Cache",
+  "Latency",
+  "Bandwidth",
+  "Request",
+  "Response",
+  "Status",
+  "Debugger",
+  "Error",
+  "Exception",
+  "Logging",
+  "Trace",
+  "Console",
+  "Script",
+  "Command",
+  "Execute",
+  "Run",
+  "Thread",
+  "Process",
+  "Lock",
+  "Mutex",
+  "Semaphore",
+  "Timeout",
+  "Interval",
+  "Namespace",
+  "Package",
+  "Import",
+  "Export",
+  "Install",
+  "Update",
+  "Upgrade",
+  "Rollback",
+  "Dependency",
+  "Version",
+  "Tokenize",
+  "Parse",
+  "Serialize",
+  "Destructure",
+  "Hash",
+  "Salt",
+  "Index",
+  "Query",
+  "Normalize",
+  "Optimize",
+  "Minify",
+  "Lint",
+  "Format",
+  "Render",
+]
+
+const answerMax = 3
+
+function produceAnswer() {
+  let out = ""
+  for (let i = 0; i < 2; ++i) {
+    out += " " + answers[Math.floor(Math.random() * answers.length)]
+  }
+  return out
+}
+
 function name() {
   return `${adjs[Math.floor(Math.random() * adjs.length)]}.${nouns[Math.floor(Math.random() * nouns.length)]}`
 }
 
 let sendMessages = false
-async function sendAudienceMessage(answer, idx) {
+async function sendAudienceMessage() {
     await fetch('http://localhost:3000/answer', {
       method: "POST",
       body: JSON.stringify({
-        idx,
-        answer,
+        idx: Math.floor(Math.random() * answerMax) + 1,
+        answer: produceAnswer(),
       })
     });
 }
 
-async function sendTwitchMessage(answer, idx) {
+async function sendTwitchMessage() {
     await fetch('http://localhost:3000/fake-twitch-msg', {
       method: "POST",
       body: JSON.stringify({
-        idx,
-        answer,
+        idx: Math.floor(Math.random() * answerMax) + 1,
+        answer: produceAnswer(),
         name: name(),
       })
     });
 }
 
-let msg = 1
 async function sendMsgs() {
   while (sendMessages) {
     const which = Math.floor(Math.random() * 2)
     if (which === 1) {
-      sendTwitchMessage(`twitch:${msg++}`, Math.floor(Math.random() * 10));
+      sendTwitchMessage();
     } else {
-      sendAudienceMessage(`audience:${msg++}`, Math.floor(Math.random() * 10));
+      sendAudienceMessage();
     }
     await (new Promise(res => setTimeout(res, 500)))
   }
@@ -73,16 +208,9 @@ async function readLine(line) {
         s.send(JSON.stringify({
           type: "survey.opened",
           questions: [
-            "how many 1",
-            "how many 2",
-            "how many 3",
-            "how many 4",
-            "how many 5",
-            "how many 6",
-            "how many 7",
-            "how many 8",
-            "how many 9",
-            "how many 10",
+            "What is your favorite frontend framework?",
+            "What is the first thing you say when you see a bug?",
+            "How many unit tests should you write?",
           ]
         }));
 
@@ -90,6 +218,11 @@ async function readLine(line) {
     }
   } else if (line === "close") {
     sendMessages = false
+    for (const s of sockets) {
+      s.send(JSON.stringify({
+        type: "survey.closed",
+      }));
+    }
   }
 }
 

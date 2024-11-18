@@ -38,6 +38,11 @@ Bus.listen("survey.opened", (state, questions) => {
   state.running = true
   state.questions = questions
   sync_states()
+
+  console.log("waiting for 2 minutes")
+  setTimeout(function() {
+    Bus.emit("survey.closed", Bus.getState());
+  }, 10 * 1000);
 })
 
 const LOCAL_TESTING = true;
