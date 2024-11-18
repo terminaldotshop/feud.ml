@@ -4,7 +4,8 @@ type state = Agg.State.t
 
 module Container = struct
   let[@react.component] make ~children =
-    <div className="gap-4 flex flex-col h-full max-w-[500px] mx-auto">
+    <div className="min-h-screen max-w-[500px] mx-auto tracking-tight flex \
+                    flex-col">
       <img src="/public/feud-logo.png" /> children
     </div>
   ;;
@@ -13,24 +14,30 @@ end
 module Questionaire = struct
   let[@react.component] make ~question ~index ~count ~increment =
     <Container>
-      <div className="p-6 gap-4 flex flex-col text-white">
-        <div className="tracking-tight">
-          <span className="text-white">
-            (string @@ Format.sprintf "Question %d / %d" index count)
-          </span>
+      <form className="p-6  grow h-full flex flex-col justify-between"
+            onSubmit=increment>
+        <div className="flex flex-col gap-6">
+          <div className="text-muted px-4">
+            (string @@ Format.sprintf "question %d / %d" index count)
+          </div>
+          <label htmlFor="game-answer" className="text-white px-4 font-medium">
+            (string question)
+          </label>
+          <input id="game-answer"
+                 autoFocus=true
+                 className="bg-white bg-opacity-[12%] py-2 px-4 text-[#B7B7B7] \
+                            focus:bg-[#220B00] focus:ring-1 focus:ring-inset \
+                            focus:ring-[#FF5C00] outline-none \
+                            focus:outline-none"
+                 type_="text"
+                 name="answer"
+                 placeholder="answer" />
         </div>
-        <div className="tracking-tight">
-          <span className="text-white">(string question)</span>
-        </div>
-        <input id="game-answer"
-               className="bg-[#242424] p-2 rounded"
-               type_="text"
-               name="answer"
-               placeholder="answer" />
-      </div>
-      <button className="bg-[#FF5C00] p-2 rounded text-white" onClick=increment>
-        (string "Next")
-      </button>
+        <button type_="submit"
+                className="bg-brand py-2 px-4 text-white font-semibold text-lg">
+          (string "next")
+        </button>
+      </form>
     </Container>
   ;;
 end
@@ -38,9 +45,13 @@ end
 module NotRunning = struct
   let[@react.component] make () =
     <Container>
-      <div className="flex flex-col text-white mx-auto">
-        <div>(string "We are not currently collecting questions")</div>
-        <div>(string "This page will update when we are ready!")</div>
+      <div className="flex flex-col mx-auto text-muted">
+        <div>(string "// ready to play?")</div>
+        <div>(string "// give quick short answers...")</div>
+        <div className="mt-4">
+          (string "// this page will update automatically")
+        </div>
+        <div>(string "// when the survey beings, hang tight")</div>
       </div>
     </Container>
   ;;
@@ -48,7 +59,6 @@ end
 
 module Done = struct
   let[@react.component] make () =
-    (* ["line 1"; "line 2"; "line 3"] *)
     let allLines =
       [ <div>(string "... Calculating cool categories")</div>
       ; <div className="text-red-300">

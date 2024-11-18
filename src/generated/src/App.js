@@ -17,7 +17,7 @@ function App$Container(Props) {
                     }),
                 children
               ],
-              className: "gap-4 flex flex-col h-full max-w-[500px] mx-auto"
+              className: "min-h-screen max-w-[500px] mx-auto tracking-tight flex flex-col"
             });
 }
 
@@ -29,16 +29,16 @@ function make(question) {
   return function (index) {
     return function (count) {
       return function (increment) {
-        return JsxRuntime.jsxs(App$Container, {
-                    children: [
-                      JsxRuntime.jsxs("div", {
-                            children: [
-                              JsxRuntime.jsx("div", {
-                                    children: JsxRuntime.jsx("span", {
+        return JsxRuntime.jsx(App$Container, {
+                    children: JsxRuntime.jsxs("form", {
+                          children: [
+                            JsxRuntime.jsxs("div", {
+                                  children: [
+                                    JsxRuntime.jsx("div", {
                                           children: Curry._2(Stdlib__Format.sprintf(/* Format */{
                                                     _0: {
                                                       TAG: /* String_literal */11,
-                                                      _0: "Question ",
+                                                      _0: "question ",
                                                       _1: {
                                                         TAG: /* Int */4,
                                                         _0: /* Int_d */0,
@@ -57,35 +57,35 @@ function make(question) {
                                                         }
                                                       }
                                                     },
-                                                    _1: "Question %d / %d"
+                                                    _1: "question %d / %d"
                                                   }), index, count),
-                                          className: "text-white"
+                                          className: "text-muted px-4"
                                         }),
-                                    className: "tracking-tight"
-                                  }),
-                              JsxRuntime.jsx("div", {
-                                    children: JsxRuntime.jsx("span", {
+                                    JsxRuntime.jsx("label", {
                                           children: question,
-                                          className: "text-white"
+                                          className: "text-white px-4 font-medium",
+                                          htmlFor: "game-answer"
                                         }),
-                                    className: "tracking-tight"
-                                  }),
-                              JsxRuntime.jsx("input", {
-                                    className: "bg-[#242424] p-2 rounded",
-                                    id: "game-answer",
-                                    name: "answer",
-                                    placeholder: "answer",
-                                    type: "text"
-                                  })
-                            ],
-                            className: "p-6 gap-4 flex flex-col text-white"
-                          }),
-                      JsxRuntime.jsx("button", {
-                            children: "Next",
-                            className: "bg-[#FF5C00] p-2 rounded text-white",
-                            onClick: increment
-                          })
-                    ]
+                                    JsxRuntime.jsx("input", {
+                                          className: "bg-white bg-opacity-[12%] py-2 px-4 text-[#B7B7B7] focus:bg-[#220B00] focus:ring-1 focus:ring-inset focus:ring-[#FF5C00] outline-none focus:outline-none",
+                                          id: "game-answer",
+                                          autoFocus: true,
+                                          name: "answer",
+                                          placeholder: "answer",
+                                          type: "text"
+                                        })
+                                  ],
+                                  className: "flex flex-col gap-6"
+                                }),
+                            JsxRuntime.jsx("button", {
+                                  children: "next",
+                                  className: "bg-brand py-2 px-4 text-white font-semibold text-lg",
+                                  type: "submit"
+                                })
+                          ],
+                          className: "p-6  grow h-full flex flex-col justify-between",
+                          onSubmit: increment
+                        })
                   });
       };
     };
@@ -105,13 +105,20 @@ function App$NotRunning(Props) {
               children: JsxRuntime.jsxs("div", {
                     children: [
                       JsxRuntime.jsx("div", {
-                            children: "We are not currently collecting questions"
+                            children: "// ready to play?"
                           }),
                       JsxRuntime.jsx("div", {
-                            children: "This page will update when we are ready!"
+                            children: "// give quick short answers..."
+                          }),
+                      JsxRuntime.jsx("div", {
+                            children: "// this page will update automatically",
+                            className: "mt-4"
+                          }),
+                      JsxRuntime.jsx("div", {
+                            children: "// when the survey beings, hang tight"
                           })
                     ],
-                    className: "flex flex-col text-white mx-auto"
+                    className: "flex flex-col mx-auto text-muted"
                   })
             });
 }
