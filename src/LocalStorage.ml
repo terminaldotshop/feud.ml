@@ -2,12 +2,12 @@
 type storage
 
 (* External binding to localStorage *)
-external localStorage : storage = "localStorage" [@@mel.global "localStorage"]
+external localStorage : storage = "localStorage"
 
 (* External functions for localStorage methods *)
-external getItem : storage -> string -> string option = "getItem" [@@mel.call]
-external setItem : storage -> string -> string -> unit = "setItem" [@@mel.call]
-external removeItem : storage -> string -> unit = "removeItem" [@@mel.call]
+external getItem : storage -> string -> string option = "getItem"
+external setItem : storage -> string -> string -> unit = "setItem"
+external removeItem : storage -> string -> unit = "removeItem"
 
 (* Usage *)
 let save_data key value = setItem localStorage key value
