@@ -1,8 +1,18 @@
-# Top Shelf FM
+# Terminal Feud: Survey and Processing Application
 
-This is a site built primarily with OCaml + Melange.
+Built with OCaml/mlx/reason-react/melange + Bun
 
-It gets bundled with Vite into a single bundle, and then launched with Cloudflare Pages
+# Deploy
 
-I hope you like it!
+```
+OPENAI_API_KEY=
+GAME_WS_ENDPOINT=
+STATE_PATH=
+```
 
+# Sponsors
+
+Shoutout to:
+- Sentry
+- Tarides
+- Ahrefs
