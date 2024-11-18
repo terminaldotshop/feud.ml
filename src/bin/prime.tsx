@@ -1,5 +1,5 @@
-import "../server.jsx"
-import * as Bus from "../events.js"
+import "../server.tsx"
+import * as Bus from "../events.ts"
 
 // setTimeout(function() {
 //     Bus.emit("survey.opened", Bus.getState(), [

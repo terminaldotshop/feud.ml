@@ -3,9 +3,9 @@ console.log("[production] Starting Production Server...")
 import * as fs from "fs"
 import * as Track from "../app-state.ts"
 
-import * as Bus from "../events.js"
+import * as Bus from "../events.ts"
 import * as LLM from "../llm.js"
-import { server } from "../server.jsx"
+import { server } from "../server.tsx"
 import { Transform } from "../generated/src/agg.js"
 
 Bus.startDashboardClient()

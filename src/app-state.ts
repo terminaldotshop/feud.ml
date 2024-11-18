@@ -1,5 +1,5 @@
 import { appendFile } from "node:fs/promises"
-import * as Bus from "./events.js"
+import * as Bus from "./events.ts"
 import * as fs from "fs/promises"
 
 function responsed(state: TrackingState): ResponsedTrackingState {
@@ -107,7 +107,7 @@ export function pushTwitchMessage(msg: string) {
 
 export function pushAudienceMessage(msg: string) {
   try {
-    messageQueue.push(`audienc: ${msg}`)
+    messageQueue.push(`audience: ${msg}`)
   } catch { }
   ensureFlush()
 }

@@ -1,8 +1,8 @@
 console.log("[production] Starting Adam Server...");
 
-import { server } from "../server.jsx";
+import { server } from "../server.tsx";
 
-import * as Bus from "../events.js";
+import * as Bus from "../events.ts";
 
 let state = Bus.getState();
 state.running = true;

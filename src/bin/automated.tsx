@@ -1,5 +1,5 @@
-import "../server.jsx"
-import * as Bus from "../events.js"
+import "../server.tsx"
+import * as Bus from "../events.ts"
 
 Bus.startDashboardClient()
 
@@ -9,7 +9,7 @@ Bus.listen("survey.opened", function() {
     console.log("[automated] Sending survey.closed");
 
     let state = Bus.getState();
-    // let pretend = 
+    // let pretend =
     state.running = true;
     state.questions = [
       "This is the first question!",
