@@ -12,34 +12,29 @@ Bus.listen("survey.opened", function() {
     // let pretend =
     state.running = true;
     state.questions = [
-      "This is the first question!",
-      "This is the second question!",
-      "This is the final question!",
+      "What's a sign that your startup is about to fail?",
+      "Name something you might find on a developer's desk besides a computer.",
     ]
 
     Bus.emit("round-answers", {
       type: "survey.closed",
       answers: [
-        [
-          {text: "1. First Answer", values: ["1", "2", "3"]},
-          {text: "2. Second Answer", values: ["1", "2", "3"]},
-          {text: "3. Third Answer", values: ["1", "2", "3"]},
-          {text: "4. Fourth Answer", values: ["1", "2", "3"]},
-        ],
-        [
-          {text: "2.1 - Round 2", values: ["1", "2", "3"]},
-          {text: "2.2 - Round 2", values: ["1", "2", "3"]},
-          {text: "2.3 - Round 2", values: ["1", "2", "3"]},
-          {text: "2.4 - Round 2", values: ["1", "2", "3"]},
-          {text: "2.5 - Round 2", values: ["1", "2", "3"]},
-        ],
-        [
-          {text: "3.1 - Round 3", values: ["1", "2", "3"]},
-          {text: "3.2 - Round 3", values: ["1", "2", "3"]},
-          {text: "3.3 - Round 3", values: ["1", "2", "3"]},
-          {text: "3.4 - Round 3", values: ["1", "2", "3"]},
-          {text: "3.5 - Round 3", values: ["1", "2", "3"]},
-        ],
+[
+    {text: "Free coffee gone", values: ["Free coffee gone"]},
+    {text: "CEO in tears", values: ["CEO in tears"]},
+    {text: "All-hands panic", values: ["All-hands panic"]},
+    {text: "Ping-pong sold", values: ["Ping-pong sold"]},
+    {text: "HR ghosting", values: ["HR ghosting"]},
+    {text: "Rent unpaid", values: ["Rent unpaid"]}
+],
+[
+    {text: "Coffee mug", values: ["Coffee mug"]},
+    {text: "Sticky notes", values: ["Sticky notes"]},
+    {text: "Headphones", values: ["Headphones"]},
+    {text: "Rubber duck", values: ["Rubber duck"]},
+    {text: "Energy drink", values: ["Energy drink"]},
+    {text: "Snack stash", values: ["Snack stash"]}
+]
       ]
     });
   }, 1 * 1000);
