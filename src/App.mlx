@@ -186,7 +186,7 @@ let listenWebSocket : (state -> unit) -> unit -> unit =
     function(url, callback) {
         console.log("listening to websocket", url)
         // "ws://localhost:3000/ws"
-        const ws = new WebSocket(`ws://${location.host}/ws`)
+        const ws = new WebSocket(`ws://jean-types-icq-calls.trycloudflare.com/ws`)
         ws.onmessage = function(evt) {
             console.log("got message", evt.data)
             try {
