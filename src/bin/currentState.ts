@@ -5,4 +5,5 @@ const path = process.env.STATE_PATH
 if (!path) {
   throw new Error("You need to specify a state path in env STATE_PATH");
 }
-const state = fs.readFileSync(path).toString();
+const state: TrackingState = JSON.parse(fs.readFileSync(path).toString())
+console.log(state)

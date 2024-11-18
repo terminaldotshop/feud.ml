@@ -1,7 +1,7 @@
 console.log("Importing and starting server...")
 
 import { State } from "./generated/src/agg.js"
-import * as Bus from "./events.js"
+import * as Bus from "./events.ts"
 import * as Track from "./app-state.ts"
 
 import * as ReactDOMServer from "react-dom/server";
@@ -63,6 +63,7 @@ export const server = Bun.serve({
     }  else if (url.pathname === "/answer") {
       try {
         const { idx, answer } = await req.json();
+        Bus.emit("audience", getName(), `${idx}.${answer}`)
         console.log("idx", idx, "answer", answer)
 
         for (let i = 0; i < 5; ++i) {
