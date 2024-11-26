@@ -1,0 +1,108 @@
+open React
+
+let messages =
+  [ <div>(string "$ ./run_data_analysis.sh")</div>
+  ; <div>(string "Starting data analysis job...")</div>
+  ; <div>
+      (string
+         "Initializing parameters... Loading data from source... Data successfully loaded (20 answers)")
+    </div>
+  ; <div>(string "Running pre-processing tasks...")</div>
+  ; <div>
+      (string
+         "Pre-processing complete. Executing main analysis... Progress: [====================] 100%")
+    </div>
+  ; <div>
+      (string
+         "$ ./run_data_analysis.sh  Starting data analysis job... Initializing parameters... Setting up AI modules and configurations... Allocating memory and preparing runtime environment... System check complete. No issues detected.")
+    </div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div className="text-blue">
+      (string
+         "INFO  | Sponsored message from Ahrefs: \"Boost your SEO strategy with Ahrefs. Find out more at ssh terminal.shop.\"")
+    </div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>
+      (string
+         "Loading data from source... Data connection established to database: feud_answers_2024-11-16.csv")
+    </div>
+  ; <div>
+      (string
+         "Fetching records... Data successfully loaded. Total records: 12,398 Performing data integrity checks... Data integrity verified.")
+    </div>
+  ; <div>(string "No discrepancies found.")</div>
+  ; <div>
+      (string
+         "Running pre-processing tasks... Tokenizing text entries... Removing duplicates and invalid records... Converting data to a structured format... Normalizing and cleaning data fields... Pre-processing complete. Ready for main analysis.")
+    </div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div className="text-blue">
+      (string
+         "INFO  | Sponsored message from Tarides: \"Building the future of scalable OCaml applications. Learn more at ssh terminal.shop.\"")
+    </div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>
+      (string
+         "Executing main analysis... Loading model: Advanced Feud Answer Analyzer Allocating resources to GPU... Model successfully loaded.")
+    </div>
+  ; <div>
+      (string
+         "Starting analysis... Analyzing answer patterns... Identifying top-scoring answers... Calculating sentiment scores... Detecting anomalies in response distribution... Progress: [========          ] 45% (Ongoing)")
+    </div>
+  ; <div>
+      (string
+         "INFO  | Memory optimization in progress to handle large data efficiently... Progress: [===============   ] 85% (Almost Done)")
+    </div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div className="text-blue">
+      (string
+         "INFO  | Sponsored message from OCaml: \"Speed, Safety, Flexibility - All with OCaml. Discover the possibilities at ssh terminal.shop.\"")
+    </div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>
+      (string
+         "Cleaning up temporary files... Releasing allocated memory... Closing database connection... System resources successfully released.")
+    </div>
+  ; <div className="text-[#25D0AB]">
+      (string
+         "Progress: [====================] 100% (Completed) Analysis successful")
+    </div>
+  ; <div>
+      (string
+         "Output: - Results saved to: ~/feud/output/answers_summary.txt - Logs saved to: /home/feud/answers/logs/2024-11-16_feud.log")
+    </div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div className="text-blue">
+      (string
+         "INFO  | Sponsored message from Sentry: \"Track errors in real-time. Increase your app's reliability. Visit ssh terminal.shop for details.\"")
+    </div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "Job completed at 16:45:12")</div>
+  ; <div>(string "Total execution time: 2m 34s")</div>
+  ; <div>(string "")</div>
+  ; <div>(string "")</div>
+  ; <div className="text-brand">
+      (string "This page will refresh when the next survey is ready...")
+    </div>
+  ]
+;;

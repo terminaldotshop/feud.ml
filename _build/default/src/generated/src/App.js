@@ -2,6 +2,7 @@
 
 import * as Caml_array from "melange.js/caml_array.js";
 import * as Curry from "melange.js/curry.js";
+import * as Melange__ScrollingMessages from "./ScrollingMessages.js";
 import * as Stdlib__Array from "melange/array.js";
 import * as Stdlib__Format from "melange/format.js";
 import * as Stdlib__List from "melange/list.js";
@@ -132,287 +133,13 @@ const NotRunning = {
 };
 
 function App$Done(Props) {
-  const allLines_0 = JsxRuntime.jsx("div", {
-        children: "$ ./run_data_analysis.sh"
-      });
-  const allLines_1 = {
-    hd: JsxRuntime.jsx("div", {
-          children: "Starting data analysis job..."
-        }),
-    tl: {
-      hd: JsxRuntime.jsx("div", {
-            children: "Initializing parameters... Loading data from source... Data successfully loaded (20 answers)"
-          }),
-      tl: {
-        hd: JsxRuntime.jsx("div", {
-              children: "Running pre-processing tasks..."
-            }),
-        tl: {
-          hd: JsxRuntime.jsx("div", {
-                children: "Pre-processing complete. Executing main analysis... Progress: [====================] 100%"
-              }),
-          tl: {
-            hd: JsxRuntime.jsx("div", {
-                  children: "$ ./run_data_analysis.sh  Starting data analysis job... Initializing parameters... Setting up AI modules and configurations... Allocating memory and preparing runtime environment... System check complete. No issues detected."
-                }),
-            tl: {
-              hd: JsxRuntime.jsx("div", {
-                    children: ""
-                  }),
-              tl: {
-                hd: JsxRuntime.jsx("div", {
-                      children: ""
-                    }),
-                tl: {
-                  hd: JsxRuntime.jsx("div", {
-                        children: "INFO  | Sponsored message from Ahrefs: \"Boost your SEO strategy with Ahrefs. Find out more at ssh terminal.shop.\"",
-                        className: "text-blue"
-                      }),
-                  tl: {
-                    hd: JsxRuntime.jsx("div", {
-                          children: ""
-                        }),
-                    tl: {
-                      hd: JsxRuntime.jsx("div", {
-                            children: ""
-                          }),
-                      tl: {
-                        hd: JsxRuntime.jsx("div", {
-                              children: ""
-                            }),
-                        tl: {
-                          hd: JsxRuntime.jsx("div", {
-                                children: ""
-                              }),
-                          tl: {
-                            hd: JsxRuntime.jsx("div", {
-                                  children: "Loading data from source... Data connection established to database: feud_answers_2024-11-16.csv"
-                                }),
-                            tl: {
-                              hd: JsxRuntime.jsx("div", {
-                                    children: "Fetching records... Data successfully loaded. Total records: 12,398 Performing data integrity checks... Data integrity verified."
-                                  }),
-                              tl: {
-                                hd: JsxRuntime.jsx("div", {
-                                      children: "No discrepancies found."
-                                    }),
-                                tl: {
-                                  hd: JsxRuntime.jsx("div", {
-                                        children: "Running pre-processing tasks... Tokenizing text entries... Removing duplicates and invalid records... Converting data to a structured format... Normalizing and cleaning data fields... Pre-processing complete. Ready for main analysis."
-                                      }),
-                                  tl: {
-                                    hd: JsxRuntime.jsx("div", {
-                                          children: ""
-                                        }),
-                                    tl: {
-                                      hd: JsxRuntime.jsx("div", {
-                                            children: ""
-                                          }),
-                                      tl: {
-                                        hd: JsxRuntime.jsx("div", {
-                                              children: "INFO  | Sponsored message from Tarides: \"Building the future of scalable OCaml applications. Learn more at ssh terminal.shop.\"",
-                                              className: "text-blue"
-                                            }),
-                                        tl: {
-                                          hd: JsxRuntime.jsx("div", {
-                                                children: ""
-                                              }),
-                                          tl: {
-                                            hd: JsxRuntime.jsx("div", {
-                                                  children: ""
-                                                }),
-                                            tl: {
-                                              hd: JsxRuntime.jsx("div", {
-                                                    children: ""
-                                                  }),
-                                              tl: {
-                                                hd: JsxRuntime.jsx("div", {
-                                                      children: ""
-                                                    }),
-                                                tl: {
-                                                  hd: JsxRuntime.jsx("div", {
-                                                        children: ""
-                                                      }),
-                                                  tl: {
-                                                    hd: JsxRuntime.jsx("div", {
-                                                          children: ""
-                                                        }),
-                                                    tl: {
-                                                      hd: JsxRuntime.jsx("div", {
-                                                            children: "Executing main analysis... Loading model: Advanced Feud Answer Analyzer Allocating resources to GPU... Model successfully loaded."
-                                                          }),
-                                                      tl: {
-                                                        hd: JsxRuntime.jsx("div", {
-                                                              children: "Starting analysis... Analyzing answer patterns... Identifying top-scoring answers... Calculating sentiment scores... Detecting anomalies in response distribution... Progress: [========          ] 45% (Ongoing)"
-                                                            }),
-                                                        tl: {
-                                                          hd: JsxRuntime.jsx("div", {
-                                                                children: "INFO  | Memory optimization in progress to handle large data efficiently... Progress: [===============   ] 85% (Almost Done)"
-                                                              }),
-                                                          tl: {
-                                                            hd: JsxRuntime.jsx("div", {
-                                                                  children: ""
-                                                                }),
-                                                            tl: {
-                                                              hd: JsxRuntime.jsx("div", {
-                                                                    children: ""
-                                                                  }),
-                                                              tl: {
-                                                                hd: JsxRuntime.jsx("div", {
-                                                                      children: "INFO  | Sponsored message from OCaml: \"Speed, Safety, Flexibility - All with OCaml. Discover the possibilities at ssh terminal.shop.\"",
-                                                                      className: "text-blue"
-                                                                    }),
-                                                                tl: {
-                                                                  hd: JsxRuntime.jsx("div", {
-                                                                        children: ""
-                                                                      }),
-                                                                  tl: {
-                                                                    hd: JsxRuntime.jsx("div", {
-                                                                          children: ""
-                                                                        }),
-                                                                    tl: {
-                                                                      hd: JsxRuntime.jsx("div", {
-                                                                            children: ""
-                                                                          }),
-                                                                      tl: {
-                                                                        hd: JsxRuntime.jsx("div", {
-                                                                              children: ""
-                                                                            }),
-                                                                        tl: {
-                                                                          hd: JsxRuntime.jsx("div", {
-                                                                                children: "Cleaning up temporary files... Releasing allocated memory... Closing database connection... System resources successfully released."
-                                                                              }),
-                                                                          tl: {
-                                                                            hd: JsxRuntime.jsx("div", {
-                                                                                  children: "Progress: [====================] 100% (Completed) Analysis successful",
-                                                                                  className: "text-[#25D0AB]"
-                                                                                }),
-                                                                            tl: {
-                                                                              hd: JsxRuntime.jsx("div", {
-                                                                                    children: "Output: - Results saved to: ~/feud/output/answers_summary.txt - Logs saved to: /home/feud/answers/logs/2024-11-16_feud.log"
-                                                                                  }),
-                                                                              tl: {
-                                                                                hd: JsxRuntime.jsx("div", {
-                                                                                      children: ""
-                                                                                    }),
-                                                                                tl: {
-                                                                                  hd: JsxRuntime.jsx("div", {
-                                                                                        children: ""
-                                                                                      }),
-                                                                                  tl: {
-                                                                                    hd: JsxRuntime.jsx("div", {
-                                                                                          children: ""
-                                                                                        }),
-                                                                                    tl: {
-                                                                                      hd: JsxRuntime.jsx("div", {
-                                                                                            children: ""
-                                                                                          }),
-                                                                                      tl: {
-                                                                                        hd: JsxRuntime.jsx("div", {
-                                                                                              children: "INFO  | Sponsored message from Sentry: \"Track errors in real-time. Increase your app's reliability. Visit ssh terminal.shop for details.\"",
-                                                                                              className: "text-blue"
-                                                                                            }),
-                                                                                        tl: {
-                                                                                          hd: JsxRuntime.jsx("div", {
-                                                                                                children: ""
-                                                                                              }),
-                                                                                          tl: {
-                                                                                            hd: JsxRuntime.jsx("div", {
-                                                                                                  children: ""
-                                                                                                }),
-                                                                                            tl: {
-                                                                                              hd: JsxRuntime.jsx("div", {
-                                                                                                    children: ""
-                                                                                                  }),
-                                                                                              tl: {
-                                                                                                hd: JsxRuntime.jsx("div", {
-                                                                                                      children: ""
-                                                                                                    }),
-                                                                                                tl: {
-                                                                                                  hd: JsxRuntime.jsx("div", {
-                                                                                                        children: "Job completed at 16:45:12"
-                                                                                                      }),
-                                                                                                  tl: {
-                                                                                                    hd: JsxRuntime.jsx("div", {
-                                                                                                          children: "Total execution time: 2m 34s"
-                                                                                                        }),
-                                                                                                    tl: {
-                                                                                                      hd: JsxRuntime.jsx("div", {
-                                                                                                            children: ""
-                                                                                                          }),
-                                                                                                      tl: {
-                                                                                                        hd: JsxRuntime.jsx("div", {
-                                                                                                              children: ""
-                                                                                                            }),
-                                                                                                        tl: {
-                                                                                                          hd: JsxRuntime.jsx("div", {
-                                                                                                                children: "This page will refresh when the next survey is ready...",
-                                                                                                                className: "text-brand"
-                                                                                                              }),
-                                                                                                          tl: /* [] */0
-                                                                                                        }
-                                                                                                      }
-                                                                                                    }
-                                                                                                  }
-                                                                                                }
-                                                                                              }
-                                                                                            }
-                                                                                          }
-                                                                                        }
-                                                                                      }
-                                                                                    }
-                                                                                  }
-                                                                                }
-                                                                              }
-                                                                            }
-                                                                          }
-                                                                        }
-                                                                      }
-                                                                    }
-                                                                  }
-                                                                }
-                                                              }
-                                                            }
-                                                          }
-                                                        }
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  };
-  const allLines = {
-    hd: allLines_0,
-    tl: allLines_1
-  };
   const match = React.useState(function () {
         return 0;
       });
   const setidx = match[1];
   const idx = match[0];
   const timeout_function = function (param) {
-    if (idx < Stdlib__List.length(allLines)) {
+    if (idx < Stdlib__List.length(Melange__ScrollingMessages.messages)) {
       return Curry._1(setidx, (function (i) {
                     return i + 1 | 0;
                   }));
@@ -422,7 +149,7 @@ function App$Done(Props) {
   setTimeout(timeout_function, 200);
   const displayLines = Caml_array.make(idx, null);
   Stdlib__Array.iteri((function (idx, param) {
-          Caml_array.set(displayLines, idx, Stdlib__List.nth(allLines, idx));
+          Caml_array.set(displayLines, idx, Stdlib__List.nth(Melange__ScrollingMessages.messages, idx));
         }), displayLines);
   return JsxRuntime.jsx(App$Container, {
               children: JsxRuntime.jsx("div", {
@@ -535,4 +262,4 @@ export {
   App ,
   $$default as default,
 }
-/* Stdlib__Format Not a pure module */
+/* Melange__ScrollingMessages Not a pure module */
