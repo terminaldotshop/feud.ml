@@ -20,7 +20,7 @@ module Questionaire = struct
                        increment ())>
         <div className="flex flex-col gap-6">
           <div className="text-muted px-4">
-            (string @@ Format.sprintf "question %d / %d" index count)
+            (string @@ Format.sprintf "question! %d / %d" index count)
           </div>
           <label htmlFor="game-answer" className="text-white px-4 font-medium">
             (string question)
@@ -100,22 +100,31 @@ let listenWebSocket : (state -> unit) -> unit -> unit =
     |}]
 ;;
 
-let rawDogFetch : int -> unit =
-  [%mel.raw
-    {|
-    function(idx) {
-      const el = document.querySelector("#game-answer")
-      const answer = el.value
-        console.log("answering question", idx + 1, answer)
-fetch('/answer', {
-   method: 'POST',
-  headers: {
-      'Content-Type': 'application/json',
-    },
-  body: JSON.stringify({ idx: idx + 1, answer }),
-  })
-    }
-    |}]
+let post_response idx =
+  let get_answer () =
+    let doc = Webapi.Dom.document in
+    let element = Webapi.Dom.Document.querySelector "#game-answer" doc in
+    let element = Option.get element in
+    let value = Webapi.Dom.Element.asHtmlElement element in
+    let value = Option.get value in
+    Webapi.Dom.HtmlElement.value value
+  in
+  let make_headers ~content_type () =
+    let dict = Js.Dict.empty () in
+    Js.Dict.set dict "Content-Type" content_type;
+    dict |> Fetch.HeadersInit.makeWithDict
+  in
+  let headers = make_headers ~content_type:"application/json" () in
+  let answer = get_answer () in
+  let body =
+    [%mel.obj { idx; answer }]
+    |> Js.Json.stringifyAny
+    |> Option.get
+    |> Fetch.BodyInit.make
+  in
+  Js.Console.log ("Answering:", body);
+  let init = Fetch.RequestInit.make ~method_:Post ~headers ~body () in
+  Fetch.fetchWithInit "/answer" init |> ignore
 ;;
 
 module App = struct
@@ -125,22 +134,24 @@ module App = struct
 
   let reducer (state : state) action =
     match action with
-    | Increment ->
-      rawDogFetch state.currentIdx;
-      { state with currentIdx = state.currentIdx + 1 }
+    | Increment -> { state with currentIdx = state.currentIdx + 1 }
     | Replace state -> state
   ;;
 
   let[@react.component] make ~(state : state) =
     let state, dispatch = useReducer reducer state in
-    let increment _ = dispatch Increment in
-    useEffect (fun () ->
-      let close =
-        listenWebSocket (fun state ->
-          Js.Console.log state;
-          dispatch (Replace state))
-      in
-      Some close);
+    let increment _ =
+      Js.Console.log "Calling Increment";
+      post_response (state.currentIdx + 1);
+      dispatch Increment
+    in
+    (* useEffect (fun () -> *)
+    (*   let close = *)
+    (*     listenWebSocket (fun state -> *)
+    (*       Js.Console.log state; *)
+    (*       dispatch (Replace state)) *)
+    (*   in *)
+    (*   Some close); *)
     match state with
     | { running = false; _ } -> <NotRunning />
     | { currentIdx; _ } when currentIdx < Array.length state.questions ->

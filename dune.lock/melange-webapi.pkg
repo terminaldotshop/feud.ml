@@ -1,0 +1,17 @@
+(version 0.21.0)
+
+(build
+ (progn
+  (when
+   %{pkg-self:dev}
+   (run dune subst))
+  (run dune build -p %{pkg-self:name} -j %{jobs} @install)))
+
+(depends dune ocaml melange melange-fetch reason)
+
+(source
+ (fetch
+  (url
+   https://github.com/melange-community/melange-webapi/releases/download/0.21.0/melange-webapi-0.21.0.tbz)
+  (checksum
+   sha256=13005ea0d9f1d688389cc3abf4154fc61da60aaaf541c9d3ee508366bc1b12c1)))

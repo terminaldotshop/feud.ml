@@ -18,5 +18,7 @@
  (name feud)
  (allow_empty)
  (depends 
-   ocaml dune melange reason-react fmt base ppx_deriving mlx ocamlmerlin-mlx)
+   ocaml dune reason-react fmt base ppx_deriving mlx ocamlmerlin-mlx
+   melange melange-fetch melange-webapi)
+   
  (tags (meme fun)))
